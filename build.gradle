@@ -1,0 +1,99 @@
+group 'ninja.harmless.fhj'
+version '0.1-SNAPSHOT'
+
+
+buildscript {
+    ext {
+        springBootVersion = "1.4.1.RELEASE"
+        springDependencyManagementPluginVersion = "0.6.1.RELEASE"
+        aspectjVersion = "1.8.4"
+        aspectJPluginVersion = "1.6"
+    }
+    repositories {
+        jcenter()
+        mavenCentral()
+        maven {
+            url "https://maven.eveoh.nl/content/repositories/releases"
+        }
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:$springBootVersion")
+        classpath("io.spring.gradle:dependency-management-plugin:$springDependencyManagementPluginVersion")
+        classpath("nl.eveoh:gradle-aspectj:$aspectJPluginVersion")
+    }
+}
+
+allprojects {
+    apply plugin: "java"
+    apply plugin: 'aspectj'
+    apply plugin: "idea"
+    apply plugin: "io.spring.dependency-management"
+
+    repositories {
+        mavenCentral()
+        maven {
+            url 'https://repo.spring.io/libs-milestone'
+        }
+    }
+
+    //noinspection GroovyAssignabilityCheck
+    configurations { provided }
+
+    idea {
+        module {
+            scopes.COMPILE.plus << configurations.provided
+        }
+    }
+}
+
+subprojects {
+    apply plugin: "spring-boot"
+
+    springBoot {
+        bootRepackage.enabled = false
+        bootRun.enabled = false
+        findMainClass.enabled = false
+    }
+
+    //noinspection GroovyMissingReturnStatement
+    dependencyManagement {
+        imports {
+            mavenBom 'org.springframework.cloud:spring-cloud-dependencies:Camden.RELEASE'
+        }
+        dependencies {
+            //noinspection GroovyAssignabilityCheck
+            dependency "org.spockframework:spock-core:1.0-groovy-2.4"
+            //noinspection GroovyAssignabilityCheck
+            dependency "org.spockframework:spock-spring:1.0-groovy-2.4"
+        }
+    }
+
+    //noinspection GroovyAssignabilityCheck
+    sourceSets {
+        main {
+            compileClasspath += configurations.provided
+            runtimeClasspath += configurations.provided
+        }
+        test {
+            compileClasspath += configurations.provided
+            runtimeClasspath += configurations.provided
+        }
+    }
+
+    /** *************************************
+     // Groovy Joint compilation configuration
+     *  *************************************/
+    afterEvaluate {
+        // the groovy plugin ss well as the groovy dependency have to be present
+        if (it.plugins.hasPlugin("groovy")) {
+            sourceSets.main.java.srcDirs = []
+            sourceSets.main.groovy.srcDirs += ["src/main/java"]
+        }
+    }
+}
+
+task wrapper(type: Wrapper) {
+    String gradleVersionNumber = "3.1"
+    gradleVersion = gradleVersionNumber
+    distributionUrl = "https://services.gradle.org/distributions/gradle-$gradleVersionNumber-all.zip"
+}

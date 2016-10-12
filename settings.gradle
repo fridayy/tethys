@@ -1,0 +1,28 @@
+rootProject.name = 'tethys'
+
+/**
+ * Creates the project structure for gradle.
+ * Fix to put sub projects into a directory
+ */
+
+def projectMap = [
+        "tethys-backend" : "",
+        "tethys-common" : "",
+        "tethys-ui-angular2" : "",
+        "tethys-ui-react" : ""
+]
+
+projectMap.keySet().each {
+    include it as String
+}
+
+rootProject.children.each {
+    String projectName = it.name.replaceAll("\\p{Upper}") {
+        it.toLowerCase()
+    }
+    def path = projectMap[projectName] ?: ""
+    it.projectDir = new File(settingsDir, "$path/$projectName")
+    it.setBuildFileName("build.gradle")
+}
+
+

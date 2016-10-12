@@ -1,0 +1,12 @@
+#Spring Boot tethys-ui-angular2 configuration
+spring:
+  application:
+    name: tethys-ui-angular2
+server:
+  port: 8000
+  context-path: /
+  compression:
+    enabled: true
+    min-response-size: 1024
+    mime-types: text/html, text/xml, text/plain, text/css, application/javascript, application/json
+

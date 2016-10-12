@@ -1,0 +1,14 @@
+plugins {
+    id "com.moowork.node" version "0.13"
+}
+
+apply plugin: "java"
+
+dependencies {
+
+    compile project(':tethys-common')
+    compile('org.springframework.boot:spring-boot-starter-web')
+    testCompile('org.spockframework:spock-core:1.1-groovy-2.4-rc-2')
+    testCompile('org.spockframework:spock-spring:1.1-groovy-2.4-rc-2')
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+}
