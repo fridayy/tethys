@@ -47,7 +47,7 @@ module.exports = {
         }),
 
         new HtmlWebpackPlugin({
-            template: '/home/bnjm/IdeaProjects/tethys/tethys-ui-angular2/src/main/resources/static/index.html'
+            template: './src/main/frontend/index.html'
         })
     ]
 };

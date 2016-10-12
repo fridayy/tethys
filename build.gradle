@@ -37,6 +37,14 @@ allprojects {
     }
 
     //noinspection GroovyAssignabilityCheck
+    jar {
+        manifest {
+            attributes("Title": project.name,
+                    "Version": version)
+        }
+    }
+
+    //noinspection GroovyAssignabilityCheck
     configurations { provided }
 
     idea {

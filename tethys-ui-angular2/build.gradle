@@ -3,6 +3,7 @@ plugins {
 }
 
 apply plugin: "java"
+bootRepackage.enabled = true
 
 dependencies {
 
@@ -12,3 +13,18 @@ dependencies {
     testCompile('org.spockframework:spock-spring:1.1-groovy-2.4-rc-2')
     testCompile('org.springframework.boot:spring-boot-starter-test')
 }
+
+// Runs the build script from package.json
+npm_run {
+    args = ['build']
+}
+// Copy angular2 dist into spring boot static directory
+task buildAngular(dependsOn: npm_run) << {
+    copy {
+        from "dist"
+        into "./src/main/resources/static"
+    }
+    println "Copied Angular2 build to static."
+}
+
+build.dependsOn(buildAngular)
