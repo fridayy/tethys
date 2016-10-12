@@ -1,0 +1,8 @@
+Angular2:
+    Describe how to quickly bootstrap and build angular2 with webpack and spring boot
+    see: corresponding build.gralde and webpack config files!
+        https://angular.io/docs/ts/latest/guide/webpack.html#!#top
+
+React:
+    Describe how to quickly bootstrap and build ReactJS with webpack and spring boot
+    using "create-react-app" (https://github.com/facebookincubator/create-react-app#getting-started)

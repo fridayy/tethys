@@ -1,0 +1,14 @@
+▄▄▄█████▓▓█████▄▄▄█████▓ ██░ ██▓██   ██▓  ██████
+▓  ██▒ ▓▒▓█   ▀▓  ██▒ ▓▒▓██░ ██▒▒██  ██▒▒██    ▒
+▒ ▓██░ ▒░▒███  ▒ ▓██░ ▒░▒██▀▀██░ ▒██ ██░░ ▓██▄
+░ ▓██▓ ░ ▒▓█  ▄░ ▓██▓ ░ ░▓█ ░██  ░ ▐██▓░  ▒   ██▒
+  ▒██▒ ░ ░▒████▒ ▒██▒ ░ ░▓█▒░██▓ ░ ██▒▓░▒██████▒▒
+  ▒ ░░   ░░ ▒░ ░ ▒ ░░    ▒ ░░▒░▒  ██▒▒▒ ▒ ▒▓▒ ▒ ░
+    ░     ░ ░  ░   ░     ▒ ░▒░ ░▓██ ░▒░ ░ ░▒  ░ ░
+${AnsiColor.BRIGHT_BLUE}  ░         ░    ░       ░  ░░ ░▒ ▒ ░░  ░  ░  ░
+${AnsiColor.BRIGHT_BLUE}            ░  ░         ░  ░  ░░ ░           ░
+ ${AnsiColor.BRIGHT_BLUE}                               ░ ░
+${AnsiColor.BRIGHT_BLUE}>> ${AnsiColor.DEFAULT}A ${AnsiColor.BRIGHT_GREEN}SpringBoot (${spring-boot.version})${AnsiColor.DEFAULT} and ${AnsiColor.BRIGHT_BLUE}ReactJS ${AnsiColor.DEFAULT}Application ${AnsiColor.BRIGHT_BLUE}:: ${AnsiColor.DEFAULT}BannerArt by http://www.patorjk.com/software/taag/
+${AnsiColor.BRIGHT_BLUE}  >> Author: benjamin.krenn@edu.fh-joanneum.at
+
+
