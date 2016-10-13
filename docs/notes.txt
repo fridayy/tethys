@@ -6,3 +6,5 @@ Angular2:
 React:
     Describe how to quickly bootstrap and build ReactJS with webpack and spring boot
     using "create-react-app" (https://github.com/facebookincubator/create-react-app#getting-started)
+
+    THE INDEX.JS & PUBLIC/INDEX.HTML FILES CAN NOT BE MOVED due to react-scripts doing their magic!
