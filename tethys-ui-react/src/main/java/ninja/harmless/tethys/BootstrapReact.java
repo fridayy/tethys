@@ -4,6 +4,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
+ * Bootstraps the React frontend for tethys.
+ *
  * @author bnjm@harmless.ninja - 10/13/16.
  */
 @SpringBootApplication

@@ -1,3 +1,6 @@
+plugins {
+    id "com.moowork.node" version "0.13"
+}
 apply plugin: "java"
 bootRepackage.enabled = true
 
@@ -8,3 +11,25 @@ dependencies {
     testCompile('org.spockframework:spock-spring:1.1-groovy-2.4-rc-2')
     testCompile('org.springframework.boot:spring-boot-starter-test')
 }
+
+// Runs the build script from package.json
+npm_run {
+    args = ['build']
+}
+
+task buildReact(dependsOn: npm_run) {
+    copy {
+        from 'build/static'
+        into './src/main/resources/static/static'
+    }
+
+    copy {
+        from('build') {
+            include 'favicon.ico'
+            include 'index.html'
+        }
+        into './src/main/resources/static'
+    }
+    println "copied ReactJS build to static"
+}
+build.dependsOn(buildReact)
