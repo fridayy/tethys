@@ -1,5 +1,12 @@
 apply plugin: 'java'
 
 dependencies {
-    provided "org.springframework.boot:spring-boot-starter-aop"
+    provided('org.springframework.boot:spring-boot-starter-actuator')
+    provided('org.springframework.boot:spring-boot-starter-aop')
+    provided('org.springframework.boot:spring-boot-starter-data-mongodb')
+    provided('org.springframework.boot:spring-boot-starter-data-rest')
+    provided('org.springframework.boot:spring-boot-starter-web')
+    provided('com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.8.2')
+    provided('io.jsonwebtoken:jjwt:0.7.0')
+    provided('org.apache.commons:commons-lang3:3.4')
 }

@@ -22,7 +22,6 @@ public class LoggingAspect {
 
     @Pointcut("@annotation(ninja.harmless.tethys.aop.logging.EnableLogging) && execution(* * (..))")
     public void annotationPointcut() {
-
     }
 
     @AfterThrowing(pointcut = "annotationPointcut()", throwing = "e")
