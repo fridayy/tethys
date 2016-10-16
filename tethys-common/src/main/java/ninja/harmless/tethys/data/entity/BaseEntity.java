@@ -9,12 +9,11 @@ import org.springframework.data.annotation.Id;
  * @author bnjm@harmless.ninja - 10/17/16.
  */
 @MongoDTO
-public abstract class BaseEntity {
+public class BaseEntity {
     @Id
     private String id;
 
-    public BaseEntity(String id) {
-        this.id = id;
+    public BaseEntity() {
     }
 
     public String getId() {
