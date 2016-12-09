@@ -15,3 +15,9 @@ server:
     min-response-size: 1024
     mime-types: text/html, text/xml, text/plain, text/css, application/javascript, application/json
 
+# Custom properties
+tethys:
+  apiVersion: v1
+  frontend:
+    angularUrl: http://localhost:8080
+    reactUrl: http://localhost:8080

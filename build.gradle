@@ -6,8 +6,6 @@ buildscript {
     ext {
         springBootVersion = "1.4.2.RELEASE"
         springDependencyManagementPluginVersion = "0.6.1.RELEASE"
-        aspectjVersion = "1.8.4"
-        aspectJPluginVersion = "1.6"
     }
     repositories {
         jcenter()
@@ -19,13 +17,11 @@ buildscript {
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:$springBootVersion")
         classpath("io.spring.gradle:dependency-management-plugin:$springDependencyManagementPluginVersion")
-        classpath("nl.eveoh:gradle-aspectj:$aspectJPluginVersion")
     }
 }
 
 allprojects {
     apply plugin: "java"
-    apply plugin: 'aspectj'
     apply plugin: "idea"
     apply plugin: "io.spring.dependency-management"
 
@@ -55,7 +51,7 @@ allprojects {
 }
 
 subprojects {
-    apply plugin: "spring-boot"
+    apply plugin: 'org.springframework.boot'
 
     springBoot {
         bootRepackage.enabled = false
@@ -68,12 +64,12 @@ subprojects {
             mavenBom 'org.springframework.cloud:spring-cloud-dependencies:Camden.RELEASE'
         }
         dependencies {
-            dependency "org.spockframework:spock-core:1.0-groovy-2.4"
-            dependency "org.spockframework:spock-spring:1.0-groovy-2.4"
+            dependency "org.spockframework:spock-core:1.1-groovy-2.4-rc-3"
+            dependency "org.spockframework:spock-spring:1.1-groovy-2.4-rc-3"
         }
     }
 
-    //noinspection GroovyAssignabilityCheck
+
     sourceSets {
         main {
             compileClasspath += configurations.provided
@@ -86,7 +82,6 @@ subprojects {
     }
 
 
-    // Groovy Joint compilation configuration
     afterEvaluate {
         if (it.plugins.hasPlugin("groovy")) {
             sourceSets.main.java.srcDirs = []

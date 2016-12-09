@@ -1,4 +1,5 @@
 apply plugin: 'java'
+apply plugin: 'groovy'
 
 dependencies {
     provided('org.springframework.boot:spring-boot-starter-actuator')
@@ -11,6 +12,6 @@ dependencies {
     provided('org.apache.commons:commons-lang3:3.4')
     provided('org.codehaus.groovy:groovy-all')
     provided('org.springframework.boot:spring-boot-starter-test')
-    provided('org.spockframework:spock-core:1.0-groovy-2.4')
-    provided('org.spockframework:spock-spring:1.0-groovy-2.4')
+    provided('org.spockframework:spock-core:1.1-groovy-2.4-rc-3')
+    provided('org.spockframework:spock-spring:1.1-groovy-2.4-rc-3')
 }

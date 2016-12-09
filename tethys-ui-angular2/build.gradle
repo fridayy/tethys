@@ -20,7 +20,7 @@ npm_run {
     args = ['build']
 }
 // Copy angular2 dist into spring boot static directory
-task buildAngular(dependsOn: npm_run) << {
+task buildAngular(dependsOn: npm_run) {
     copy {
         from "dist"
         into "./src/main/resources/static"
