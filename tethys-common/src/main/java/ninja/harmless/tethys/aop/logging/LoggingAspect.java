@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * This logging aspect is used to fight cross cutting concerns.
- * Logs exceptions within methods if the method is annotated with{@link EnableLogging}
+ * Logs exceptions within methods if the method is annotated with{@link EnableExceptionLogging}
  *
  * @author bnjm@harmless.ninja - 10/13/16.
  */
@@ -20,12 +20,15 @@ public class LoggingAspect {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    @Pointcut("@annotation(ninja.harmless.tethys.aop.logging.EnableLogging) && execution(* * (..))")
+    @Pointcut("@annotation(ninja.harmless.tethys.aop.logging.EnableExceptionLogging) && execution(* * (..))")
     public void annotationPointcut() {
     }
 
     @AfterThrowing(pointcut = "annotationPointcut()", throwing = "e")
     public void logExceptionAfterThrowing(JoinPoint jp, Throwable e) {
-        logger.error("{} in {}.{}() thrown. Cause: {}. ", e.getMessage(), jp.getSignature().getDeclaringTypeName(), jp.getSignature().getName(), e.getCause(), e);
+        logger.error("{} in {}.{}() thrown. Cause: {}. ",
+                e.getMessage(), jp.getSignature().getDeclaringTypeName(),
+                jp.getSignature().getName(),
+                e.getCause(), e);
     }
 }
