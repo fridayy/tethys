@@ -12,7 +12,7 @@ import org.springframework.core.type.AnnotatedTypeMetadata;
  *
  * @author bnjm@harmless.ninja - 12/9/16.
  */
-public class MongoDBCondition implements Condition {
+public class MongoDBNotPresentCondition implements Condition {
     @Override
     public boolean matches(ConditionContext context, AnnotatedTypeMetadata metadata) {
         Environment environment = context.getEnvironment();

@@ -8,6 +8,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import java.util.Arrays;
+
 /**
  * This logging aspect is used to fight cross cutting concerns.
  * Logs exceptions within methods if the method is annotated with{@link EnableExceptionLogging}
@@ -26,9 +28,10 @@ public class LoggingAspect {
 
     @AfterThrowing(pointcut = "annotationPointcut()", throwing = "e")
     public void logExceptionAfterThrowing(JoinPoint jp, Throwable e) {
-        logger.error("{} in {}.{}() thrown. Cause: {}. ",
+        logger.error("{} in {}.{}({}) thrown. Cause: {}. ",
                 e.getMessage(), jp.getSignature().getDeclaringTypeName(),
                 jp.getSignature().getName(),
+                Arrays.toString(jp.getArgs()),
                 e.getCause(), e);
     }
 }

@@ -1,19 +1,37 @@
 package ninja.harmless.tethys.todo.controller
 
-import org.springframework.web.bind.annotation.CrossOrigin
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import ninja.harmless.tethys.aop.logging.EnableExceptionLogging
+import ninja.harmless.tethys.todo.TodoService
+import ninja.harmless.tethys.todo.model.Todo
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.data.domain.Page
+import org.springframework.http.HttpStatus
+import org.springframework.http.MediaType
+import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.*
 
 /**
+ * REST Controller which provides multiple end points for the front-ends to consume.
+ *
  * @author bnjm@harmless.ninja - 12/9/16.
  */
 @RestController
 @RequestMapping(value = '${tethys.apiVersion}/todo')
-@CrossOrigin(origins = ['${tethys.frontend.angularUrl}','${tethys.frontend.angularUrl}'])
+@CrossOrigin(origins = ['${tethys.frontend.angularUrl}', '${tethys.frontend.angularUrl}'])
 class TodoController {
 
-    @RequestMapping
-    String hello() {
-      return "lol!"
+    TodoService todoService
+
+    @Autowired
+    TodoController(TodoService todoService) {
+        this.todoService = todoService
+    }
+
+    @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @EnableExceptionLogging
+    ResponseEntity<Page<Todo>> getTodoByPage(@RequestParam(value = "page", defaultValue = "0") String page,
+                                             @RequestParam(value = "size", defaultValue = "15") String size) {
+
+        return new ResponseEntity<Page<Todo>>(todoService.getPage(page, size), HttpStatus.OK)
     }
 }

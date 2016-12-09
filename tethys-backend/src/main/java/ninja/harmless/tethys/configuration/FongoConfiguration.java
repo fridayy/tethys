@@ -14,7 +14,7 @@ import org.springframework.data.mongodb.config.AbstractMongoConfiguration;
  * @author bnjm@harmless.ninja - 12/9/16.
  */
 @Configuration
-@Conditional(MongoDBCondition.class)
+@Conditional(MongoDBNotPresentCondition.class)
 public class FongoConfiguration extends AbstractMongoConfiguration {
 
     @Bean
