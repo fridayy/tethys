@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController
  * @author bnjm@harmless.ninja - 12/9/16.
  */
 @RestController
-@RequestMapping(value ='${tethys.apiVersion}/todo')
+@RequestMapping(value = '${tethys.apiVersion}/todo')
 @CrossOrigin(origins = ['${tethys.frontend.angularUrl}','${tethys.frontend.angularUrl}'])
 class TodoController {
 
