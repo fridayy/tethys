@@ -2,11 +2,6 @@
 spring:
   application:
     name: tethys-backend
-  data:
-    mongodb:
-      host: 127.0.0.1
-      port: 27017
-      database: morpheus
 server:
   port: 8000
   context-path: /
@@ -21,3 +16,21 @@ tethys:
   frontend:
     angularUrl: http://localhost:8080
     reactUrl: http://localhost:8080
+
+
+# Profiles config
+---
+spring:
+  profiles: prod
+  data:
+    mongodb:
+      host: 127.0.0.1
+      port: 27017
+      database: morpheus
+---
+spring:
+  profiles: dev
+---
+spring:
+  profiles:
+    active: dev
