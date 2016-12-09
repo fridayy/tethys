@@ -27,10 +27,6 @@ class TodoController {
         this.todoService = todoService
     }
 
-    @RequestMapping("/test")
-    String test(@RequestParam(value = "test", defaultValue = "0") int a) {
-        return "Entered: $a"
-    }
 
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @EnableExceptionLogging
