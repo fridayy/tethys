@@ -27,10 +27,15 @@ class TodoController {
         this.todoService = todoService
     }
 
+    @RequestMapping("/test")
+    String test(@RequestParam(value = "test", defaultValue = "0") int a) {
+        return "Entered: $a"
+    }
+
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @EnableExceptionLogging
-    ResponseEntity<Page<Todo>> getTodoByPage(@RequestParam(value = "page", defaultValue = "0") String page,
-                                             @RequestParam(value = "size", defaultValue = "15") String size) {
+    ResponseEntity<Page<Todo>> getTodoByPage(@RequestParam(value = "page", defaultValue = "0") int page,
+                                             @RequestParam(value = "size", defaultValue = "15") int size) {
 
         return new ResponseEntity<Page<Todo>>(todoService.getPage(page, size), HttpStatus.OK)
     }

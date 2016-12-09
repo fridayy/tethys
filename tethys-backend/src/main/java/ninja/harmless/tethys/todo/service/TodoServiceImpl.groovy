@@ -25,10 +25,10 @@ class TodoServiceImpl implements TodoService {
     }
 
     @Override
-    Page<Todo> getPage(String page, String size) {
+    Page<Todo> getPage(int page, int size) {
         Assert.notNull(page, "Page cannot be null.")
         Assert.notNull(size, "Size cannot be null.")
 
-        return repository.findAll(new PageRequest(page as Integer, size as Integer))
+        return repository.findAll(new PageRequest(page, size))
     }
 }

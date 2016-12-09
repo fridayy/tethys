@@ -6,5 +6,5 @@ import org.springframework.data.domain.Page
  * @author bnjm@harmless.ninja - 12/9/16.
  */
 interface TodoService {
-    Page<Todo> getPage(String page, String size)
+    Page<Todo> getPage(int page, int size)
 }
