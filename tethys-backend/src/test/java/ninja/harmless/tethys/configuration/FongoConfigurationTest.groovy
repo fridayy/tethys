@@ -33,10 +33,10 @@ class FongoConfigurationTest extends Specification {
 
     void "Objects can be saved and retrieved"() {
         given:
-            Todo expectation = new Todo(id: "1")
+            Todo expectation = new Todo("abc", "abc")
         when:
-            repository.save(expectation)
-            def result = repository.findOne("1")
+            Todo savedEntity = repository.save(expectation)
+            def result = repository.findOne(savedEntity.id)
         then:
             result.id == expectation.id
     }

@@ -30,7 +30,7 @@ class TodoControllerTest extends Specification {
 
     void "Controller is available"() {
         expect:
-            mockMvc.perform(MockMvcRequestBuilders.get("/$apiVersion/todo"))
+            mockMvc.perform(MockMvcRequestBuilders.get("/$apiVersion/todos"))
                     .andExpect(MockMvcResultMatchers.status().isOk())
 
     }

@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class TodoResourceAssembler extends ResourceAssemblerSupport<Todo, TodoResource>{
 
+
     /**
      * Creates a new {@link ResourceAssemblerSupport} using the given controller class and resource type.
      */
