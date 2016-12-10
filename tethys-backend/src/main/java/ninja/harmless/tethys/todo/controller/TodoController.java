@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 /**
  * REST Controller which provides multiple end points for the front-ends to consume.
  *
@@ -19,7 +20,6 @@ import org.springframework.web.bind.annotation.*;
 public class TodoController {
 
     TodoResourceService todoService;
-
 
     @Autowired
     TodoController(TodoResourceService todoService) {
@@ -45,6 +45,7 @@ public class TodoController {
 
     /**
      * Returns a TodoResource by id
+     *
      * @param id
      * @return
      */
