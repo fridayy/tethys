@@ -1,7 +1,6 @@
 package ninja.harmless.tethys.todo.controller
 
-import groovy.transform.TypeChecked
-import ninja.harmless.tethys.todo.TodoService
+import ninja.harmless.tethys.todo.TodoResourceService
 import ninja.harmless.tethys.todo.model.TodoResource
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.hateoas.PagedResources
@@ -16,27 +15,26 @@ import org.springframework.web.bind.annotation.*
  * @author bnjm@harmless.ninja - 12/9/16.
  */
 @RestController
-@RequestMapping(value = '${tethys.apiVersion}/todo')
+@RequestMapping(value = '${tethys.apiVersion}')
 @CrossOrigin(origins = ['${tethys.frontend.angularUrl}', '${tethys.frontend.angularUrl}'])
-@TypeChecked
 class TodoController {
 
-    TodoService todoService
+    TodoResourceService todoService
 
 
     @Autowired
-    TodoController(TodoService todoService) {
+    TodoController(TodoResourceService todoService) {
         this.todoService = todoService
     }
 
     /**
-     * Returns a paged representation of todoitems limited by @param page.
+     * Returns a paged representation of TodoResources limited by @param page.
      *
      * @param page
      * @param limit
      * @return
      */
-    @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/todos", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<PagedResources<TodoResource>> getTodoPages(
             @RequestParam(value = "page", defaultValue = "0") int page,
             @RequestParam(value = "limit", defaultValue = "15") int limit) {
@@ -44,5 +42,16 @@ class TodoController {
         PagedResources<TodoResource> pagedTodoResource = todoService.getPagedResource(page, limit)
 
         return new ResponseEntity<PagedResources<TodoResource>>(pagedTodoResource, HttpStatus.OK)
+    }
+
+    /**
+     * Returns a TodoResource by id
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "/todo", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    ResponseEntity<TodoResource> getTodoResourceById(@RequestParam(required = true) String id) {
+        TodoResource r = todoService.getResourceById(id)
+        return new ResponseEntity<TodoResource>(r, HttpStatus.OK)
     }
 }

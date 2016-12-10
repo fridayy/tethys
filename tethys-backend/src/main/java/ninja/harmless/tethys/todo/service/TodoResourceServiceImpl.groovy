@@ -1,8 +1,8 @@
 package ninja.harmless.tethys.todo.service
 
-import groovy.transform.TypeChecked
 import io.jsonwebtoken.lang.Assert
-import ninja.harmless.tethys.todo.TodoService
+import ninja.harmless.tethys.todo.TodoResourceService
+import ninja.harmless.tethys.todo.controller.TodoController
 import ninja.harmless.tethys.todo.model.Todo
 import ninja.harmless.tethys.todo.model.TodoResource
 import ninja.harmless.tethys.todo.repository.TodoRepository
@@ -12,35 +12,30 @@ import org.springframework.data.domain.PageRequest
 import org.springframework.data.web.PagedResourcesAssembler
 import org.springframework.hateoas.PagedResources
 import org.springframework.stereotype.Component
+
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn
 /**
  * Provides TodoResources for the TodoController
  *
  * @author bnjm@harmless.ninja - 12/9/16.
  */
 @Component
-@TypeChecked
-class TodoServiceImpl implements TodoService {
+class TodoResourceServiceImpl implements TodoResourceService {
 
     TodoRepository repository
     PagedResourcesAssembler<Todo> pagedResourcesAssembler
     TodoResourceAssembler todoResourceAssembler
 
     @Autowired
-    TodoServiceImpl(TodoRepository repository,
-                    PagedResourcesAssembler<Todo> pagedResourcesAssembler,
-                    TodoResourceAssembler todoResourceAssembler) {
+    TodoResourceServiceImpl(TodoRepository repository,
+                            PagedResourcesAssembler<Todo> pagedResourcesAssembler,
+                            TodoResourceAssembler todoResourceAssembler) {
         this.repository = repository
         this.pagedResourcesAssembler = pagedResourcesAssembler
         this.todoResourceAssembler = todoResourceAssembler
     }
 
-    @Override
-    Page<Todo> getPage(int page, int size) {
-        Assert.notNull(page, "Page cannot be null.")
-        Assert.notNull(size, "Size cannot be null.")
-
-        return repository.findAll(new PageRequest(page, size))
-    }
 
     @Override
     PagedResources<TodoResource> getPagedResource(int page, int limit) {
@@ -50,5 +45,14 @@ class TodoServiceImpl implements TodoService {
 
         return pagedResourcesAssembler.toResource(todoPage, todoResourceAssembler)
 
+    }
+
+    @Override
+    TodoResource getResourceById(String id) {
+        Assert.notNull(id, "Id must not be null")
+        Todo todo = repository.findOne(id)
+        TodoResource todoResource = todoResourceAssembler.toResource(todo)
+        todoResource.add(linkTo(methodOn(TodoController.class).getTodoResourceById(id)).withSelfRel())
+        return todoResource
     }
 }
