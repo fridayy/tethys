@@ -6,9 +6,11 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.web.servlet.MockMvc
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 import spock.lang.Specification
+import spock.lang.Unroll
+
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 /**
  * @author bnjm@harmless.ninja - 12/9/16.
  */
@@ -28,10 +30,28 @@ class TodoControllerTest extends Specification {
             apiVersion != null
     }
 
-    void "Controller is available"() {
+    void "Requesting /todos returns HTTP 100"() {
         expect:
-            mockMvc.perform(MockMvcRequestBuilders.get("/$apiVersion/todos"))
-                    .andExpect(MockMvcResultMatchers.status().isOk())
+            mockMvc.perform(get("/$apiVersion/todos"))
+                    .andExpect(status().isOk())
 
+    }
+
+    @Unroll
+    void "Request to #endpoint returns HTTP 100"() {
+        expect:
+            mockMvc.perform(get("/$apiVersion/" + endpoint))
+            .andExpect(status().isOk())
+        where:
+            endpoint                || _
+            "/todos"                || _
+            "/todos?page=0"         || _
+            "/todos?page=1&size=10" || _
+            "/todo?id=1"            || _
+    }
+
+    void "Accessing /todo without ID paramter returns HTTP 400"() {
+        expect:
+            mockMvc.perform(get("/$apiVersion/todo"))
     }
 }

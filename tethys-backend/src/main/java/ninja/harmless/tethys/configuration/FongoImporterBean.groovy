@@ -12,7 +12,7 @@ import javax.annotation.PostConstruct
 
 /**
  * Post construction this bean will populate the fongo in memory db
- * with random data
+ * with random data for testing purposes.
  *
  * @author bnjm@harmless.ninja - 12/9/16.
  */
@@ -31,20 +31,23 @@ class FongoImporterBean {
     List<Todo> generateTodos(int count) {
         List<Todo> todoList = []
         (0..<count).each {
-            todoList << generateTodoItem()
+            todoList << generateTodoItem(it)
         }
         return new ImmutableList<Todo>(todoList)
     }
 
 
-    private Todo generateTodoItem() {
+    private Todo generateTodoItem(int count) {
         def pre = ["have to", "must", "should"]
         def verbs = ["buy", "get", "steal", "gather", "code", "eat", "drink", "produce", "cook"]
         def counts = ["some", "many", "one", "two"]
         def when = ["asap", "tomorrow", "soon", "fast", "immediately"]
         def what = ["apples", "java", "groovy", "pineapples", "wine", "beer", "spaghetti"]
 
-        return new Todo(generateTitle(verbs, what), generateDescription(pre, verbs, counts, when, what))
+        Todo todo = new Todo(generateTitle(verbs, what), generateDescription(pre, verbs, counts, when, what))
+        todo.setId(count as String)
+
+        return todo
     }
 
     private String generateTitle(List<String> verbs, List<String> what) {

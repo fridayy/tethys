@@ -13,8 +13,8 @@ import org.springframework.data.web.PagedResourcesAssembler
 import org.springframework.hateoas.PagedResources
 import org.springframework.stereotype.Component
 
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn
+import static ninja.harmless.tethys.hateoas.LinkBuilder.linkTo
+import static ninja.harmless.tethys.hateoas.LinkBuilder.methodOn
 /**
  * Provides TodoResources for the TodoController
  *
@@ -26,6 +26,7 @@ class TodoResourceServiceImpl implements TodoResourceService {
     TodoRepository repository
     PagedResourcesAssembler<Todo> pagedResourcesAssembler
     TodoResourceAssembler todoResourceAssembler
+
 
     @Autowired
     TodoResourceServiceImpl(TodoRepository repository,
@@ -53,6 +54,7 @@ class TodoResourceServiceImpl implements TodoResourceService {
         Todo todo = repository.findOne(id)
         TodoResource todoResource = todoResourceAssembler.toResource(todo)
         todoResource.add(linkTo(methodOn(TodoController.class).getTodoResourceById(id)).withSelfRel())
+
         return todoResource
     }
 }
