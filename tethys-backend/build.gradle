@@ -8,6 +8,7 @@ dependencies {
     compile('org.springframework.boot:spring-boot-starter-aop')
     compile('org.springframework.boot:spring-boot-starter-data-mongodb')
     compile('org.springframework.boot:spring-boot-starter-data-rest')
+    compile ('org.springframework.boot:spring-boot-starter-hateoas')
     compile('org.springframework.boot:spring-boot-starter-web')
     compile('com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.8.2')
     compile('io.jsonwebtoken:jjwt:0.7.0')

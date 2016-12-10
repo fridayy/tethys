@@ -1,0 +1,14 @@
+▄▄▄█████▓▓█████▄▄▄█████▓ ██░ ██▓██   ██▓  ██████
+▓  ██▒ ▓▒▓█   ▀▓  ██▒ ▓▒▓██░ ██▒▒██  ██▒▒██    ▒
+▒ ▓██░ ▒░▒███  ▒ ▓██░ ▒░▒██▀▀██░ ▒██ ██░░ ▓██▄
+░ ▓██▓ ░ ▒▓█  ▄░ ▓██▓ ░ ░▓█ ░██  ░ ▐██▓░  ▒   ██▒
+  ▒██▒ ░ ░▒████▒ ▒██▒ ░ ░▓█▒░██▓ ░ ██▒▓░▒██████▒▒
+  ▒ ░░   ░░ ▒░ ░ ▒ ░░    ▒ ░░▒░▒  ██▒▒▒ ▒ ▒▓▒ ▒ ░
+    ░     ░ ░  ░   ░     ▒ ░▒░ ░▓██ ░▒░ ░ ░▒  ░ ░
+${AnsiColor.BRIGHT_RED}  ░         ░    ░       ░  ░░ ░▒ ▒ ░░  ░  ░  ░
+${AnsiColor.BRIGHT_RED}            ░  ░         ░  ░  ░░ ░           ░
+ ${AnsiColor.BRIGHT_RED}                               ░ ░
+${AnsiColor.BRIGHT_RED}>> ${AnsiColor.DEFAULT}A ${AnsiColor.BRIGHT_GREEN}SpringBoot (${spring-boot.version})${AnsiColor.DEFAULT} BannerArt by http://www.patorjk.com/software/taag/
+${AnsiColor.BRIGHT_RED}  >> Author: benjamin.krenn@edu.fh-joanneum.at
+
+
