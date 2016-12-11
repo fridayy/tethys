@@ -38,7 +38,7 @@ class TodoControllerTest extends Specification {
     }
 
     @Unroll
-    void "Request to #endpoint returns HTTP 100"() {
+    void "GET Request to #endpoint returns HTTP 100"() {
         expect:
             mockMvc.perform(get("/$apiVersion/" + endpoint))
             .andExpect(status().isOk())
@@ -47,11 +47,11 @@ class TodoControllerTest extends Specification {
             "/todos"                || _
             "/todos?page=0"         || _
             "/todos?page=1&size=10" || _
-            "/todo?id=1"            || _
+            "/todo/1"               || _
     }
 
     void "Accessing /todo without ID paramter returns HTTP 400"() {
         expect:
-            mockMvc.perform(get("/$apiVersion/todo"))
+            mockMvc.perform(get("/$apiVersion/todo")).andExpect(status().isNotFound())
     }
 }

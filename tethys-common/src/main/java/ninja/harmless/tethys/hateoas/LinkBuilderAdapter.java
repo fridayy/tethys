@@ -12,7 +12,7 @@ import org.springframework.util.StringValueResolver;
  * @author bnjm@harmless.ninja - 12/10/16.
  */
 @Component
-public class LinkBuilder implements EmbeddedValueResolverAware {
+public class LinkBuilderAdapter implements EmbeddedValueResolverAware {
 
     private static final LinkBuilderFactory FACTORY = new LinkBuilderFactory();
     private StringValueResolver resolver;

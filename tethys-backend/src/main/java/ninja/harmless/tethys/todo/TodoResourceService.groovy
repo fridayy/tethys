@@ -9,4 +9,5 @@ interface TodoResourceService {
 
     PagedResources<TodoResource> getPagedResource(int page, int limit)
     TodoResource getResourceById(String id)
+    void deleteResourceById(String id)
 }

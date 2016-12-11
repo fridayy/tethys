@@ -1,6 +1,7 @@
 package ninja.harmless.tethys.todo.service
 
 import io.jsonwebtoken.lang.Assert
+import ninja.harmless.tethys.aop.logging.EnableExceptionLogging
 import ninja.harmless.tethys.todo.TodoResourceService
 import ninja.harmless.tethys.todo.controller.TodoController
 import ninja.harmless.tethys.todo.model.Todo
@@ -9,12 +10,13 @@ import ninja.harmless.tethys.todo.repository.TodoRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
+import org.springframework.data.rest.webmvc.ResourceNotFoundException
 import org.springframework.data.web.PagedResourcesAssembler
 import org.springframework.hateoas.PagedResources
 import org.springframework.stereotype.Component
 
-import static ninja.harmless.tethys.hateoas.LinkBuilder.linkTo
-import static ninja.harmless.tethys.hateoas.LinkBuilder.methodOn
+import static ninja.harmless.tethys.hateoas.LinkBuilderAdapter.linkTo
+import static ninja.harmless.tethys.hateoas.LinkBuilderAdapter.methodOn
 /**
  * Provides TodoResources for the TodoController
  *
@@ -49,12 +51,23 @@ class TodoResourceServiceImpl implements TodoResourceService {
     }
 
     @Override
+    @EnableExceptionLogging
     TodoResource getResourceById(String id) {
         Assert.notNull(id, "Id must not be null")
         Todo todo = repository.findOne(id)
+
+        if(todo == null)
+            throw new ResourceNotFoundException("Resource has not been found")
+
         TodoResource todoResource = todoResourceAssembler.toResource(todo)
         todoResource.add(linkTo(methodOn(TodoController.class).getTodoResourceById(id)).withSelfRel())
 
         return todoResource
+    }
+
+    @Override
+    void deleteResourceById(String id) {
+        Assert.notNull(id, "Id must not be null")
+        repository.delete(id)
     }
 }

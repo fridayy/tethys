@@ -49,10 +49,20 @@ public class TodoController {
      * @param id
      * @return
      */
-    @RequestMapping(value = "/todo", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<TodoResource> getTodoResourceById(@RequestParam(value = "id") String id) {
+    @RequestMapping(value = "/todo/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<TodoResource> getTodoResourceById(@PathVariable String id) {
         TodoResource r = todoService.getResourceById(id);
 
         return new ResponseEntity<>(r, HttpStatus.OK);
+    }
+
+    /**
+     * Deletes a TodoResource with the given id
+     */
+    @RequestMapping(value = "/todo/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<?> deleteTodoResourceById(@PathVariable String id) {
+        todoService.deleteResourceById(id);
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
