@@ -9,6 +9,7 @@ import org.springframework.test.web.servlet.MockMvc
 import spock.lang.Specification
 import spock.lang.Unroll
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 /**
@@ -53,5 +54,16 @@ class TodoControllerTest extends Specification {
     void "Accessing /todo without ID paramter returns HTTP 400"() {
         expect:
             mockMvc.perform(get("/$apiVersion/todo")).andExpect(status().isNotFound())
+    }
+
+    @Unroll
+    void "DELETE Request to #endpoint with valid id returns HTTP 100"() {
+        expect:
+            mockMvc.perform(delete("/$apiVersion/" + endpoint))
+            .andExpect(status().isOk())
+
+        where:
+            endpoint || _
+            "todo/1" || _
     }
 }
