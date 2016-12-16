@@ -83,6 +83,16 @@ class TodoControllerTest extends Specification {
 
         where:
             endpoint || _
-            "todo"  || _
+            "todo"   || _
+    }
+
+
+    void "PUT Request updates a resource"() {
+        given:
+            mockMvc.perform(post("/$apiVersion/todo").contentType(MediaType.APPLICATION_JSON).content(todo.toJsonString()))
+        when:
+            def result = mockMvc.perform(put("/$apiVersion/todo").contentType(MediaType.APPLICATION_JSON).content(todo.toJsonString()))
+        then:
+            result.andExpect(status().isOk())
     }
 }

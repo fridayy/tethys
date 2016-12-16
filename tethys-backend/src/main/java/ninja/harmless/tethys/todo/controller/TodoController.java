@@ -90,7 +90,7 @@ public class TodoController {
 
     @RequestMapping(value = "/todo", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> updateTodoResource(@RequestBody Todo todoResource) {
-
+        todoService.upateResource(todoResource);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }
