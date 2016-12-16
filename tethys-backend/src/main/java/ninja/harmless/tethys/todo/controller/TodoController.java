@@ -78,19 +78,24 @@ public class TodoController {
 
     /**
      * Adds a new TodoResource entry
-     * @param todoResource
-     * @return
+     * @param todo
+     * @return the created resource
      */
     @RequestMapping(value = "/todo", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> createTodoResource(@RequestBody Todo todoResource) {
-        todoService.addResource(todoResource);
+    public ResponseEntity<TodoResource> createTodoResource(@RequestBody Todo todo) {
+        TodoResource todoResource = todoService.addResource(todo);
 
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return new ResponseEntity<>(todoResource, HttpStatus.CREATED);
     }
 
+    /**
+     * Updates a given resource
+     * @param todo
+     * @return the updated resource
+     */
     @RequestMapping(value = "/todo", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> updateTodoResource(@RequestBody Todo todoResource) {
-        todoService.upateResource(todoResource);
-        return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity<?> updateTodoResource(@RequestBody Todo todo) {
+        TodoResource todoResource = todoService.upateResource(todo);
+        return new ResponseEntity<>(todoResource, HttpStatus.OK);
     }
 }

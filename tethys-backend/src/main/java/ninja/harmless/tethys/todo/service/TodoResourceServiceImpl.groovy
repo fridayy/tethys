@@ -41,23 +41,26 @@ class TodoResourceServiceImpl implements TodoResourceService {
     }
 
     @Override
-    void addResource(Todo todo) {
+    TodoResource addResource(Todo todo) {
         Assert.notNull(todo, "todo object cannot be null")
         if(repository.findByTitle(todo.title) != null) {
             throw new DuplicatedResourceException("wrong HTTP method. Use PUT.")
         } else {
             repository.save(todo)
         }
+        return todoResourceAssembler.toResource(todo)
     }
 
     @Override
-    void upateResource(Todo todo) {
+    TodoResource upateResource(Todo todo) {
         Assert.notNull(todo, "todo object cannot be null")
+
         if(repository.findByTitle(todo.title) != null) {
             repository.save(todo)
         } else {
             throw new ResourceNotFoundException("Resource has not been found")
         }
+        return todoResourceAssembler.toResource(todo)
     }
 
     @Override
