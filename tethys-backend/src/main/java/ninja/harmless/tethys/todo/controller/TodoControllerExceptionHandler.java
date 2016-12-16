@@ -24,14 +24,14 @@ class TodoControllerExceptionHandler {
 
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(ResourceNotFoundException.class)
-    public @ResponseBody String handleWrongParamterException()  {
-        return "{ \"message\": \"resource not found\"}";
+    public @ResponseBody String handleWrongParamterException(Exception e)  {
+        return "{ \"message\": \""+ e.getMessage() +"\"}";
     }
 
-    @ResponseStatus(HttpStatus.NOT_MODIFIED)
+    @ResponseStatus(HttpStatus.CONFLICT)
     @ExceptionHandler(DuplicatedResourceException.class)
     public void handleDuplicatedResourceException() {
-        // Returns HTTP 304 Not modified
+        // Returns HTTP 409 Conflict
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)

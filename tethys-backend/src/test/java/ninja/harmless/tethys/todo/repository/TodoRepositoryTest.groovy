@@ -20,7 +20,7 @@ class TodoRepositoryTest extends Specification {
 
     }
 
-    void "findByName returns the correct object"() {
+    void "findByName() returns the correct object"() {
         given:
             Todo expectation = new Todo("test", "this is just a test")
             classUnderTest.save(expectation)

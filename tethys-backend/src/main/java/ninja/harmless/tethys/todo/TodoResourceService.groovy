@@ -8,6 +8,7 @@ import org.springframework.hateoas.PagedResources
  */
 interface TodoResourceService {
     void addResource(Todo todo)
+    void upateResource(Todo todo)
     PagedResources<TodoResource> getPagedResource(int page, int limit)
     TodoResource getResourceById(String id)
     void deleteResourceById(String id)

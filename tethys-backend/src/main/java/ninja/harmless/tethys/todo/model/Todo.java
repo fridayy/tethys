@@ -35,4 +35,10 @@ public class Todo extends BaseEntity {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    @Override
+    public String toJsonString() {
+        return "{ \"title\" : \""+ this.getTitle() + "\"," +
+                " \"description\" : \"" + this.getDescription() + "\" }";
+    }
 }

@@ -1,16 +1,17 @@
 package ninja.harmless.tethys.todo.controller
 
+import ninja.harmless.tethys.todo.model.Todo
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.http.MediaType
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.web.servlet.MockMvc
 import spock.lang.Specification
 import spock.lang.Unroll
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 /**
  * @author bnjm@harmless.ninja - 12/9/16.
@@ -25,6 +26,12 @@ class TodoControllerTest extends Specification {
 
     @Value('${tethys.apiVersion}')
     String apiVersion
+
+    Todo todo
+
+    void setup() {
+        todo = new Todo("test", "test")
+    }
 
     void "Api version is set"() {
         expect:
@@ -65,5 +72,17 @@ class TodoControllerTest extends Specification {
         where:
             endpoint || _
             "todo/1" || _
+    }
+
+
+    @Unroll
+    void "POST Request to #endpoint creates new resource"() {
+        expect:
+            mockMvc.perform(post("/$apiVersion/" + endpoint).contentType(MediaType.APPLICATION_JSON).content(todo.toJsonString()))
+            .andExpect(status().isCreated())
+
+        where:
+            endpoint || _
+            "todo"  || _
     }
 }

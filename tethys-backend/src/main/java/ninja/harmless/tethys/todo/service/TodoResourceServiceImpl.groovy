@@ -51,6 +51,16 @@ class TodoResourceServiceImpl implements TodoResourceService {
     }
 
     @Override
+    void upateResource(Todo todo) {
+        Assert.notNull(todo, "todo object cannot be null")
+        if(repository.findByTitle(todo.title) != null) {
+            repository.save(todo)
+        } else {
+            throw new ResourceNotFoundException("Resource has not been found")
+        }
+    }
+
+    @Override
     PagedResources<TodoResource> getPagedResource(int page, int limit) {
         Assert.notNull(page, "Page must not be null.")
         Assert.notNull(limit, "Limit must not be null.")

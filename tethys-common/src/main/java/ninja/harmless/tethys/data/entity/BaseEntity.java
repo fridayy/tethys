@@ -38,4 +38,8 @@ public class BaseEntity {
     public int hashCode() {
         return Objects.hash(id);
     }
+
+    public String toJsonString() {
+        return "{ \"id\" : \""+ this.id+ "\"}";
+    }
 }
