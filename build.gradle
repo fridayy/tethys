@@ -1,11 +1,8 @@
-group 'ninja.harmless.fhj'
-version '0.1-SNAPSHOT'
-
-
 buildscript {
     ext {
         springBootVersion = "1.4.2.RELEASE"
         springDependencyManagementPluginVersion = "0.6.1.RELEASE"
+        dockerPluginVersion = "1.2"
     }
     repositories {
         jcenter()
@@ -17,6 +14,7 @@ buildscript {
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:$springBootVersion")
         classpath("io.spring.gradle:dependency-management-plugin:$springDependencyManagementPluginVersion")
+        classpath("se.transmode.gradle:gradle-docker:$dockerPluginVersion")
     }
 }
 
@@ -24,6 +22,7 @@ allprojects {
     apply plugin: "java"
     apply plugin: "idea"
     apply plugin: "io.spring.dependency-management"
+    apply plugin: "docker"
 
     repositories {
         mavenCentral()
@@ -48,15 +47,26 @@ allprojects {
             scopes.COMPILE.plus << configurations.provided
         }
     }
+
+    docker {
+        maintainer = 'bnjm <bnjm@harmless.ninja>'
+        baseImage = 'frolvlad/alpine-oraclejdk8:slim'
+    }
+
+    jar {
+        manifest {
+            attributes("Implementation-Title": project.name, "Implementation-Version": version)
+        }
+    }
 }
 
 subprojects {
     apply plugin: 'org.springframework.boot'
 
     springBoot {
-        bootRepackage.enabled = false
+        bootRepackage.enabled = true
         bootRun.enabled = false
-        findMainClass.enabled = false
+        findMainClass.enabled = true
     }
 
     dependencyManagement {

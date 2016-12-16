@@ -1,11 +1,10 @@
 plugins {
     id "com.moowork.node" version "0.13"
 }
+
 apply plugin: "java"
-bootRepackage.enabled = true
 
 dependencies {
-    compile project(':tethys-common')
     compile('org.springframework.boot:spring-boot-starter-web')
     testCompile('org.spockframework:spock-core:1.1-groovy-2.4-rc-2')
     testCompile('org.spockframework:spock-spring:1.1-groovy-2.4-rc-2')
@@ -17,7 +16,9 @@ npm_run {
     args = ['build']
 }
 
-task buildReact(dependsOn: npm_run) {
+compileJava.dependsOn(npm_run)
+
+compileJava.doFirst {
     copy {
         from 'build/static'
         into './src/main/resources/static/static'
@@ -30,6 +31,22 @@ task buildReact(dependsOn: npm_run) {
         }
         into './src/main/resources/static'
     }
+
     println "copied ReactJS build to static"
 }
-build.dependsOn(buildReact)
+
+
+task buildDocker(type: Docker, dependsOn: build) {
+    volume("/tmp")
+    addFile("$buildDir/libs/${project.name}-${project.version}.jar", "app.jar")
+    runCommand("touch app.jar")
+    entryPoint(["java", "-jar", "/app.jar"])
+    tag = "bnjm/tethys"
+    tagVersion = "${project.name}-${project.version}"
+    doFirst {
+        copy {
+            from jar
+            into stageDir
+        }
+    }
+}

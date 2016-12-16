@@ -16,3 +16,8 @@ dependencies {
     provided('org.spockframework:spock-core:1.1-groovy-2.4-rc-3')
     provided('org.spockframework:spock-spring:1.1-groovy-2.4-rc-3')
 }
+
+// spring-boot configuration
+bootRepackage.enabled = false
+bootRun.enabled = false
+findMainClass.enabled = false

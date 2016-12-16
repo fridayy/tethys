@@ -3,13 +3,9 @@ plugins {
 }
 
 apply plugin: "java"
-bootRepackage.enabled = true
 
 dependencies {
-
-    compile project(':tethys-common')
     compile('org.springframework.boot:spring-boot-starter-web')
-    compile('org.springframework.boot:spring-boot-starter-aop')
     testCompile('org.spockframework:spock-core:1.1-groovy-2.4-rc-2')
     testCompile('org.spockframework:spock-spring:1.1-groovy-2.4-rc-2')
     testCompile('org.springframework.boot:spring-boot-starter-test')
@@ -19,13 +15,31 @@ dependencies {
 npm_run {
     args = ['build']
 }
+
+compileJava.dependsOn(npm_run)
+
 // Copy angular2 dist into spring boot static directory
-task buildAngular(dependsOn: npm_run) {
+compileJava.doFirst {
     copy {
-        from "dist"
-        into "./src/main/resources/static"
-    }
-    println "Copied Angular2 build to static."
+            from "dist"
+            into "./src/main/resources/static"
+        }
+        println "Copied Angular2 build to static."
 }
 
-build.dependsOn(buildAngular)
+
+
+task buildDocker(type: Docker, dependsOn: build) {
+    volume("/tmp")
+    addFile("$buildDir/libs/${project.name}-${project.version}.jar", "app.jar")
+    runCommand("touch app.jar")
+    entryPoint(["java", "-jar", "/app.jar"])
+    tag = "bnjm/tethys"
+    tagVersion = "${project.name}-${project.version}"
+    doFirst {
+        copy {
+            from jar
+            into stageDir
+        }
+    }
+}
