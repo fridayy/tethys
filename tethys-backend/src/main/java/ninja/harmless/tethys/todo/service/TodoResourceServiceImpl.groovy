@@ -4,6 +4,7 @@ import io.jsonwebtoken.lang.Assert
 import ninja.harmless.tethys.aop.logging.EnableExceptionLogging
 import ninja.harmless.tethys.todo.TodoResourceService
 import ninja.harmless.tethys.todo.controller.TodoController
+import ninja.harmless.tethys.todo.exception.DuplicatedResourceException
 import ninja.harmless.tethys.todo.model.Todo
 import ninja.harmless.tethys.todo.model.TodoResource
 import ninja.harmless.tethys.todo.repository.TodoRepository
@@ -39,6 +40,15 @@ class TodoResourceServiceImpl implements TodoResourceService {
         this.todoResourceAssembler = todoResourceAssembler
     }
 
+    @Override
+    void addResource(Todo todo) {
+        Assert.notNull(todo, "todo object cannot be null")
+        if(repository.findByTitle(todo.title) != null) {
+            throw new DuplicatedResourceException("wrong HTTP method. Use PUT.")
+        } else {
+            repository.save(todo)
+        }
+    }
 
     @Override
     PagedResources<TodoResource> getPagedResource(int page, int limit) {

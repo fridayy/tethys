@@ -1,8 +1,10 @@
 package ninja.harmless.tethys.todo.controller;
 
 import ninja.harmless.tethys.todo.TodoResourceService;
+import ninja.harmless.tethys.todo.model.Todo;
 import ninja.harmless.tethys.todo.model.TodoResource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.hateoas.PagedResources;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -44,6 +46,14 @@ public class TodoController {
     }
 
     /**
+     * Throws {@link ResourceNotFoundException} to delegate the request to {@link TodoControllerExceptionHandler}
+     */
+    @RequestMapping(value = "/todo", method = RequestMethod.GET)
+    public void emptyTodoRequest() {
+        throw new ResourceNotFoundException();
+    }
+
+    /**
      * Returns a TodoResource by id
      *
      * @param id
@@ -64,5 +74,11 @@ public class TodoController {
         todoService.deleteResourceById(id);
 
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/todo", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> createTodoResource(@RequestBody Todo todoResource) {
+        todoService.addResource(todoResource);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 }

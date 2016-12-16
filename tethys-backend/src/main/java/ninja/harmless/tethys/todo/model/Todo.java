@@ -16,6 +16,10 @@ public class Todo extends BaseEntity {
         this.description = description;
     }
 
+    public Todo() {
+
+    }
+
     public String getTitle() {
         return title;
     }

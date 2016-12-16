@@ -1,7 +1,9 @@
 package ninja.harmless.tethys.todo.controller;
 
+import ninja.harmless.tethys.todo.exception.DuplicatedResourceException;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -24,5 +26,17 @@ class TodoControllerExceptionHandler {
     @ExceptionHandler(ResourceNotFoundException.class)
     public @ResponseBody String handleWrongParamterException()  {
         return "{ \"message\": \"resource not found\"}";
+    }
+
+    @ResponseStatus(HttpStatus.NOT_MODIFIED)
+    @ExceptionHandler(DuplicatedResourceException.class)
+    public void handleDuplicatedResourceException() {
+        // Returns HTTP 304 Not modified
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public @ResponseBody String handleHttpMessageNotReadableException() {
+        return "{ \"message\" : \"Required request body is missing\"}";
     }
 }

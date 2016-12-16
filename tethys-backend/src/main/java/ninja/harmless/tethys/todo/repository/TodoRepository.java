@@ -9,5 +9,5 @@ import org.springframework.data.mongodb.repository.MongoRepository;
  */
 @Document(collection = "todo")
 public interface TodoRepository extends MongoRepository<Todo, String> {
-
+    Todo findByTitle(String title);
 }
