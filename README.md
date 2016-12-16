@@ -13,11 +13,35 @@ In order to run Tethys at its current you may use a native [MongoDB](https://www
 or use the in-memory Fongo.
 
 #### Build
+Tethys can be build with or without docker.
+
+###### Without Docker
 ```sh
 ./gradlew build
 ```
 
-#### Backend
+###### With Docker
+```sh
+./gradlew buildDocker
+```
+
+#### Run with Docker
+Make sure you have [docker-compose](https://docs.docker.com/compose/) installed to simplify the process.
+If you use docker-compose mongodb will be pulled and started as well and there is no need to run a native mongo instance 
+or use the in-memory version.
+
+Run 
+```sh
+docker-compose up
+```
+in the main directory.
+
+Access points:
+* backend: *http://localhost:8000* 
+* angular: *http://localhost:8001* 
+* react: *http://localhost:8002*
+
+#### Run without Docker
 Native Mongo:
 ```sh
 java -jar /tethys/tethys-backend/build/libs/tethys-backend-0.1-SNAPSHOT.jar 
