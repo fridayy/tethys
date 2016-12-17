@@ -11,6 +11,9 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import static ninja.harmless.tethys.hateoas.LinkBuilderAdapter.linkTo;
+import static ninja.harmless.tethys.hateoas.LinkBuilderAdapter.methodOn;
+
 /**
  * REST Controller which provides multiple end points for the front-ends to consume.
  *
@@ -62,6 +65,7 @@ public class TodoController {
     @RequestMapping(value = "/todo/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<TodoResource> getTodoResourceById(@PathVariable String id) {
         TodoResource r = todoService.getResourceById(id);
+        r.add(linkTo(methodOn(TodoController.class).getTodoResourceById(id)).withSelfRel());
 
         return new ResponseEntity<>(r, HttpStatus.OK);
     }

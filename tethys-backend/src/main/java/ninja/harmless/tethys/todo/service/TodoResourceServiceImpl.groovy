@@ -3,7 +3,6 @@ package ninja.harmless.tethys.todo.service
 import io.jsonwebtoken.lang.Assert
 import ninja.harmless.tethys.aop.logging.EnableExceptionLogging
 import ninja.harmless.tethys.todo.TodoResourceService
-import ninja.harmless.tethys.todo.controller.TodoController
 import ninja.harmless.tethys.todo.exception.DuplicatedResourceException
 import ninja.harmless.tethys.todo.model.Todo
 import ninja.harmless.tethys.todo.model.TodoResource
@@ -14,10 +13,8 @@ import org.springframework.data.domain.PageRequest
 import org.springframework.data.rest.webmvc.ResourceNotFoundException
 import org.springframework.data.web.PagedResourcesAssembler
 import org.springframework.hateoas.PagedResources
+import org.springframework.hateoas.ResourceAssembler
 import org.springframework.stereotype.Component
-
-import static ninja.harmless.tethys.hateoas.LinkBuilderAdapter.linkTo
-import static ninja.harmless.tethys.hateoas.LinkBuilderAdapter.methodOn
 /**
  * Provides TodoResources for the TodoController
  *
@@ -28,13 +25,13 @@ class TodoResourceServiceImpl implements TodoResourceService {
 
     TodoRepository repository
     PagedResourcesAssembler<Todo> pagedResourcesAssembler
-    TodoResourceAssembler todoResourceAssembler
+    ResourceAssembler<Todo, TodoResource> todoResourceAssembler
 
 
     @Autowired
     TodoResourceServiceImpl(TodoRepository repository,
                             PagedResourcesAssembler<Todo> pagedResourcesAssembler,
-                            TodoResourceAssembler todoResourceAssembler) {
+                            ResourceAssembler<Todo, TodoResource> todoResourceAssembler) {
         this.repository = repository
         this.pagedResourcesAssembler = pagedResourcesAssembler
         this.todoResourceAssembler = todoResourceAssembler
@@ -82,10 +79,7 @@ class TodoResourceServiceImpl implements TodoResourceService {
         if(todo == null)
             throw new ResourceNotFoundException("Resource has not been found")
 
-        TodoResource todoResource = todoResourceAssembler.toResource(todo)
-        todoResource.add(linkTo(methodOn(TodoController.class).getTodoResourceById(id)).withSelfRel())
-
-        return todoResource
+        return todoResourceAssembler.toResource(todo)
     }
 
     @Override
