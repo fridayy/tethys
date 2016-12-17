@@ -5,6 +5,7 @@ import ninja.harmless.tethys.todo.model.Todo
 import ninja.harmless.tethys.todo.repository.TodoRepository
 import org.apache.commons.lang3.RandomUtils
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Conditional
 import org.springframework.stereotype.Component
 
@@ -23,9 +24,12 @@ class FongoImporterBean {
     @Autowired
     TodoRepository repository
 
+    @Value('${tethys.fongo.numberOfDatasets}')
+    Integer numberOfDatasets
+
     @PostConstruct
     void importDataIntoFongo() {
-        repository.save(generateTodos(100))
+        repository.save(generateTodos(numberOfDatasets))
     }
 
     List<Todo> generateTodos(int count) {
