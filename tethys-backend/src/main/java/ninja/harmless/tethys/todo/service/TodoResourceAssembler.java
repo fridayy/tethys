@@ -24,6 +24,8 @@ public class TodoResourceAssembler extends ResourceAssemblerSupport<Todo, TodoRe
 
     @Override
     public TodoResource toResource(Todo entity) {
-        return new TodoResource(entity.getId(), entity.getTitle(), entity.getDescription());
+        return new TodoResource(entity.getId(), entity.getTitle(),
+                                entity.getDescription(), entity.getMarkedDone(),
+                                entity.getCreatedAt());
     }
 }

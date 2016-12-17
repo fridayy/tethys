@@ -1,25 +1,25 @@
 package ninja.harmless.tethys.todo.model
 
-import ninja.harmless.tethys.data.entity.BaseEntity
+import org.springframework.hateoas.ResourceSupport
 
 import java.time.LocalDateTime
 
 /**
  * @author bnjm@harmless.ninja - 12/17/16.
  */
-class Todo extends BaseEntity {
+class TodoResource extends ResourceSupport {
 
-    Todo() {
+    TodoResource() {
     }
 
-    Todo(String resourceId, String title, String description, Boolean markedDone, LocalDateTime createdAt) {
+    TodoResource(String resourceId, String title, String description, Boolean markedDone, LocalDateTime createdAt) {
         this.resourceId = resourceId
         this.title = title
         this.description = description
         this.markedDone = markedDone
         this.createdAt = createdAt
     }
-
+    String resourceId
     String title
     String description
     Boolean markedDone = false
