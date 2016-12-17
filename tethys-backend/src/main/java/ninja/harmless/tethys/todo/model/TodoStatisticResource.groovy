@@ -7,15 +7,9 @@ import org.springframework.hateoas.ResourceSupport
  */
 class TodoStatisticResource extends ResourceSupport {
 
-    TodoStatisticResource(Integer totalTodos, Integer markedDone, Integer openTodos, Double percentageDone) {
-        this.totalTodos = totalTodos
-        this.markedDone = markedDone
-        this.openTodos = openTodos
-        this.percentageDone = percentageDone
+    TodoStatisticResource(Statistic statistic) {
+        this.statistic = statistic
     }
 
-    Integer totalTodos
-    Integer markedDone
-    Integer openTodos
-    Double percentageDone
+    Statistic statistic
 }
