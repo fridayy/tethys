@@ -12,6 +12,11 @@ class Todo extends BaseEntity {
     Todo() {
     }
 
+    Todo(String title, String description) {
+        this.title = title
+        this.description = description
+    }
+
     Todo(String resourceId, String title, String description, Boolean markedDone, LocalDateTime createdAt) {
         this.resourceId = resourceId
         this.title = title
