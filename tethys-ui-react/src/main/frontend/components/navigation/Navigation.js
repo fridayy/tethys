@@ -9,11 +9,9 @@ class Navigation extends Component {
     render() {
         return (
             <div className="navigation">
-                <Link to="logout">Logout</Link>
+                <Link to="/">Home</Link>
                 {" | "}
-                <Link to="todos">Todos</Link>
-                {" | "}
-                <Link to="usermanagement">User Management</Link>
+                <Link to="todo">Todos</Link>
             </div>
         )
     }
