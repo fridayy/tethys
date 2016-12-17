@@ -1,23 +1,25 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
+import React, {Component, PropTypes} from 'react';
 import './App.css';
-import Navigation from './components/navigation/Navigation'
+import Navigation from './components/navigation/Navigation';
+import Header from './components/header/Header';
 
+/**
+ * This class is rendered everytime and serves as the application layout
+ * Created by bnjm on 12/17/16.
+ */
 class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
-        </div>
-          <Navigation/>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
-    );
-  }
+    render() {
+        return (
+            <div className="App">
+                <Header />
+                <Navigation/>
+                {this.props.children}
+            </div>
+        );
+    }
 }
 
+App.propTypes = {
+    children: PropTypes.object.isRequired
+};
 export default App;
