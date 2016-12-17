@@ -6,6 +6,7 @@ import ninja.harmless.tethys.todo.model.TodoStatistic
 import ninja.harmless.tethys.todo.model.TodoStatisticResource
 import ninja.harmless.tethys.todo.repository.TodoRepository
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.hateoas.ResourceAssembler
 import org.springframework.stereotype.Service
 /**
  * @author bnjm@harmless.ninja - 12/17/16.
@@ -14,10 +15,10 @@ import org.springframework.stereotype.Service
 class TodoStatisticServiceImpl implements TodoStatisticService {
 
     TodoRepository repository
-    TodoStatisticAssembler todoStatsticAssembler
+    ResourceAssembler<TodoStatistic, TodoStatisticResource> todoStatsticAssembler
 
     @Autowired
-    TodoStatisticServiceImpl(TodoRepository repository, TodoStatisticAssembler todoStatsticAssembler) {
+    TodoStatisticServiceImpl(TodoRepository repository, ResourceAssembler<TodoStatistic, TodoStatisticResource>  todoStatsticAssembler) {
         this.repository = repository
         this.todoStatsticAssembler = todoStatsticAssembler
     }
