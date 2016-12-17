@@ -8,6 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.http.MediaType
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.web.servlet.MockMvc
+import org.springframework.test.web.servlet.ResultMatcher
 import spock.lang.Specification
 import spock.lang.Unroll
 
@@ -48,14 +49,15 @@ class TodoControllerTest extends Specification {
     @Unroll
     void "GET Request to #endpoint returns HTTP 100"() {
         expect:
+            ResultMatcher rm = expectation
             mockMvc.perform(get("/$apiVersion/" + endpoint))
-            .andExpect(status().isOk())
+            .andExpect(rm)
         where:
-            endpoint                || _
-            "/todos"                || _
-            "/todos?page=0"         || _
-            "/todos?page=1&size=10" || _
-            "/todo/1"               || _
+            endpoint                || expectation
+            "/todos"                || status().isOk()
+            "/todos?page=0"         || status().isOk()
+            "/todos?page=1&size=10" || status().isOk()
+            "/todo/1"               || status().isOk()
     }
 
     void "Accessing /todo without ID paramter returns HTTP 400"() {
@@ -66,24 +68,26 @@ class TodoControllerTest extends Specification {
     @Unroll
     void "DELETE Request to #endpoint with valid id returns HTTP 100"() {
         expect:
+            ResultMatcher rm = expectation
             mockMvc.perform(delete("/$apiVersion/" + endpoint))
-            .andExpect(status().isOk())
+            .andExpect(rm)
 
         where:
-            endpoint || _
-            "todo/1" || _
+            endpoint || expectation
+            "todo/1" || status().isOk()
     }
 
 
     @Unroll
     void "POST Request to #endpoint creates new resource"() {
         expect:
+            ResultMatcher rm = expectation
             mockMvc.perform(post("/$apiVersion/" + endpoint).contentType(MediaType.APPLICATION_JSON).content(todo.toJsonString()))
-            .andExpect(status().isCreated())
+            .andExpect(rm)
 
         where:
-            endpoint || _
-            "todo"   || _
+            endpoint || expectation
+            "todo"   || status().isCreated()
     }
 
 

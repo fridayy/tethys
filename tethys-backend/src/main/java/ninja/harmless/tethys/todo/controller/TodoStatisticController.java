@@ -25,7 +25,7 @@ public class TodoStatisticController {
         this.todoStatisticService = todoStatisticService;
     }
 
-    @RequestMapping(value = "/todo/stats", produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/todo/_stats", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<TodoStatisticResource> getStats() {
         TodoStatisticResource todoStatisticResource = todoStatisticService.provideTotalStatistics();
 
