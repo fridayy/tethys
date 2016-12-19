@@ -6,14 +6,16 @@ language: node_js
 node_js:
   - "node"
 
+before_cache:
+  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
 cache:
   directories:
-    - node_modules
+    - $HOME/.gradle/caches/
+    - $HOME/.gradle/wrapper/
 
 install:
   - npm install -g npm@4
-  - npm install -g typescript@2.1.4
-  - npm install -g webpack@1.14.0
 
 notifications:
   email: false
