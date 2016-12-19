@@ -2,6 +2,13 @@ language: java
 jdk:
   - oraclejdk8
 
+node_js:
+  - '6'
+
+cache:
+  directories:
+    - node_modules
+
 install:
   - npm install -g npm@4
   - npm install -g typescript@2.1.4
