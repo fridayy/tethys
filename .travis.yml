@@ -2,10 +2,6 @@ language: java
 jdk:
   - oraclejdk8
 
-language: node_js
-node_js:
-  - "node"
-
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
   - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
@@ -15,6 +11,7 @@ cache:
     - $HOME/.gradle/wrapper/
 
 install:
+  - nvm install node
   - npm install -g npm@4
 
 notifications:
