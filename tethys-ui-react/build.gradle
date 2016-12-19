@@ -16,9 +16,8 @@ npm_run {
     args = ['build']
 }
 
-compileJava.dependsOn(npm_run)
-
-compileJava.doFirst {
+task copyResources {
+    delete("./src/main/resources/static")
     copy {
         from 'build/static'
         into './src/main/resources/static/static'
@@ -34,6 +33,9 @@ compileJava.doFirst {
 
     println "copied ReactJS build to static"
 }
+
+copyResources.dependsOn(npm_run)
+compileJava.dependsOn(copyResources)
 
 
 task buildDocker(type: Docker, dependsOn: build) {
