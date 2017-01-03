@@ -1,45 +1,50 @@
 plugins {
-    id "com.moowork.node" version "0.13"
+  id "com.moowork.node" version "0.13"
 }
 
 apply plugin: "java"
 
 dependencies {
-    compile('org.springframework.boot:spring-boot-starter-web')
-    testCompile('org.spockframework:spock-core:1.1-groovy-2.4-rc-2')
-    testCompile('org.spockframework:spock-spring:1.1-groovy-2.4-rc-2')
-    testCompile('org.springframework.boot:spring-boot-starter-test')
+  compile('org.springframework.boot:spring-boot-starter-web')
+  testCompile('org.spockframework:spock-core:1.1-groovy-2.4-rc-2')
+  testCompile('org.spockframework:spock-spring:1.1-groovy-2.4-rc-2')
+  testCompile('org.springframework.boot:spring-boot-starter-test')
 }
 
 // Runs the build script from package.json
 npm_run {
-    args = ['build']
+  args = ['build']
 }
 
-compileJava.dependsOn(npm_run)
-
-// Copy angular2 dist into spring boot static directory
-compileJava.doFirst {
-    copy {
-            from "dist"
-            into "./src/main/resources/static"
-        }
-        println "Copied Angular2 build to static."
+task copyResources {
+  delete("./src/main/resources/static")
+  copy {
+    from './dist'
+    into './src/main/resources/static/'
+  }
 }
 
+task cleanDist {
+  delete("./dist")
+}
 
+println "copied Angular2 build to static"
+
+copyResources.dependsOn(npm_run)
+compileJava.dependsOn(copyResources)
+clean.dependsOn(cleanDist)
 
 task buildDocker(type: Docker, dependsOn: build) {
-    volume("/tmp")
-    addFile("$buildDir/libs/${project.name}-${project.version}.jar", "app.jar")
-    runCommand("touch app.jar")
-    entryPoint(["java", "-jar", "/app.jar"])
-    tag = "bnjm/tethys"
-    tagVersion = "${project.name}-${project.version}"
-    doFirst {
-        copy {
-            from jar
-            into stageDir
-        }
+  volume("/tmp")
+  addFile("$buildDir/libs/${project.name}-${project.version}.jar", "app.jar")
+  runCommand("touch app.jar")
+  entryPoint(["java", "-jar", "/app.jar"])
+  tag = "bnjm/tethys"
+  tagVersion = "${project.name}-${project.version}"
+  doFirst {
+    copy {
+      from jar
+      into stageDir
     }
+  }
 }
