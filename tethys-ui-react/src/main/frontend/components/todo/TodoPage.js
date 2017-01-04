@@ -1,83 +1,132 @@
 /**
+ * TodoPage stateful component
+ *
+ * Passes its state down to all stateless sub components
+ *
  * Created by bnjm on 12/17/16.
  */
-import React, {Component} from 'react';
-import TodoList from './TodoList';
+import React, {Component, PropTypes} from 'react';
+import CompleteTodoList from './CompleteTodoList';
+import PagedTodoList from './PagedTodoList';
+import localForage from 'localforage';
 
 class TodoPage extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {todos: [],
-                      links : '',
-                      page : ''};
+        this.state = {
+            todos: [],
+            links: '',
+            page: '',
+            renderAll: this.props.route.renderAll
+        };
+        console.log(this.props);
+        if (this.state.renderAll) {
+            this._getAllEntries();
+        } else {
+            this._getPagedEntries("0");
+        }
 
-        this.getNextPage = this.getNextPage.bind(this)
-        this.getPreviousPage = this.getPreviousPage.bind(this)
+        this._getNextPage = this._getNextPage.bind(this);
+        this._getPreviousPage = this._getPreviousPage.bind(this);
+        this._get = this._get.bind(this);
+        this._getPagedEntries = this._getPagedEntries.bind(this);
+        this._getAllEntries = this._getAllEntries.bind(this);
     }
 
-    componentWillMount() {
-        this.getTodos("/v1/todos")
+    componentWillReceiveProps(nextProps) {
+        this.setState({renderAll: nextProps.route.renderAll});
+        if (nextProps.route.renderAll) {
+            this._getAllEntries();
+        } else {
+            this._getPagedEntries(this.state.page.number);
+        }
     }
 
-
-    getTodos(url) {
-        fetch(url, {
+    _get(url) {
+        return fetch(url, {
             method: "GET"
         }).then(response => response.json())
-            .then(data => this.setState({todos: data._embedded.todoResources,
-                                        page : data.page,
-                                        links : data._links}))
+          .then(data => { return data })
+          .catch(err => console.log(err));
     }
 
-    getNextPage() {
+    _getEntries(key, fallBackURL) {
+        localForage.getItem(key).then(value => {
+            this.setState({
+                todos: value._embedded.todoResources,
+                page: value.page,
+                links: value._links
+            })
+        }).catch(err => {   console.log("Not found in store falling back to: " + fallBackURL)
+                            this._getEntriesRemotely(key, this._get(fallBackURL))})
+    }
+
+    _getEntriesRemotely(key, data) {
+        data.then(d => {
+                this.setState({
+                    todos: d._embedded.todoResources,
+                    page: d.page,
+                    links: d._links
+                })
+                if(key === null) {
+                    this._saveEntriesToStorage(d.page.number.toString(), d)
+                } else {
+                    this._saveEntriesToStorage(key, d)
+                }
+            }
+        ).catch(err => console.log(err));
+    }
+
+    _saveEntriesToStorage(key, value) {
+        localForage.setItem(key, value)
+            .catch(err => console.log(err));
+    }
+
+    _getAllEntries() {
+        this._getEntries("todos", "/v1/todos?size=1000000")
+    }
+
+    _getPagedEntries(page, url) {
+        this._getEntries(page, url)
+    }
+
+    _getNextPage() {
         let url = this.state.links.next.href;
         url = url.split("8000/")[1];
-        fetch(url, {
-            method: "GET"
-        }).then(response => response.json())
-            .then(data => this.setState({todos: data._embedded.todoResources,
-                page : data.page,
-                links : data._links}))
+        this._getPagedEntries((this.state.page.number + 1).toString(), url);
     }
 
-    getPreviousPage() {
+    _getPreviousPage() {
         let url = this.state.links.prev.href;
         url = url.split("8000/")[1];
-        fetch(url, {
-            method: "GET"
-        }).then(response => response.json())
-            .then(data => this.setState({todos: data._embedded.todoResources,
-                page : data.page,
-                links : data._links}))
+        this._getPagedEntries((this.state.page.number.toString() - 1), url);
     }
 
     render() {
+        const renderAll = this.state.renderAll;
 
-        let prevButton = '';
-        if(this.state.links.prev !== undefined) {
-            prevButton = <button onClick={this.getPreviousPage}>Previous</button>;
+        if (renderAll) {
+            return (
+                <CompleteTodoList
+                    todos={this.state.todos}
+                    page={this.state.page}
+                />
+            )
+        } else {
+            return <PagedTodoList
+                todos={this.state.todos}
+                page={this.state.page}
+                links={this.state.links}
+                onNext={this._getNextPage}
+                onPrev={this._getPreviousPage}
+            />
         }
-
-        let nextButton = '';
-        if(this.state.links.next !== undefined) {
-            nextButton = <button onClick={this.getNextPage}>Next</button>
-        }
-
-        return (
-            <div>
-                <h1>Todos</h1>
-                <div>
-                    {prevButton} {nextButton}
-                </div>
-                <small>Page: {this.state.page.number + 1}/{this.state.page.totalPages} | Total Elements: {this.state.page.totalElements}</small>
-                <TodoList todos={this.state.todos}/>
-                <div>
-                    {prevButton} {nextButton}
-                </div>
-                <small>Page: {this.state.page.number + 1}/{this.state.page.totalPages} | Total Elements: {this.state.page.totalElements}</small>
-            </div>
-        )
     }
 }
+
+TodoPage.propTypes = {
+    renderAll: PropTypes.bool.isRequired
+};
+
 export default TodoPage;

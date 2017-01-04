@@ -1,11 +1,12 @@
 /**
+ * Maps an item component for each item passed down by the stateful todopage component
+ *
  * Created by bnjm on 12/17/16.
  */
-import React, {Component} from 'react';
+import React, {PropTypes} from 'react';
 import TodoItem from './TodoItem';
 
-class TodoList extends Component {
-    render() {
+const TodoList = (props) => {
         let createEntryRow = function (todo) {
             return (
                 <TodoItem
@@ -17,9 +18,13 @@ class TodoList extends Component {
 
         return (
             <div>
-                {this.props.todos.map(createEntryRow, this)}
+                {props.todos.map(createEntryRow, this)}
             </div>
         )
-    }
 }
+
+TodoList.propTypes = {
+    todos: PropTypes.array.isRequired
+};
+
 export default TodoList;

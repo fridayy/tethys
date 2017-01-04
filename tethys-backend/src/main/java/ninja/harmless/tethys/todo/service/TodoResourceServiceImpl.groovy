@@ -2,6 +2,8 @@ package ninja.harmless.tethys.todo.service
 
 import io.jsonwebtoken.lang.Assert
 import ninja.harmless.tethys.aop.logging.EnableExceptionLogging
+import ninja.harmless.tethys.hateoas.CustomPagedResourceAssembler
+import ninja.harmless.tethys.hateoas.CustomPagedResources
 import ninja.harmless.tethys.todo.TodoResourceService
 import ninja.harmless.tethys.todo.exception.DuplicatedResourceException
 import ninja.harmless.tethys.todo.model.Todo
@@ -12,9 +14,9 @@ import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.rest.webmvc.ResourceNotFoundException
 import org.springframework.data.web.PagedResourcesAssembler
-import org.springframework.hateoas.PagedResources
 import org.springframework.hateoas.ResourceAssembler
 import org.springframework.stereotype.Component
+
 /**
  * Provides TodoResources for the TodoController
  *
@@ -25,16 +27,19 @@ class TodoResourceServiceImpl implements TodoResourceService {
 
     TodoRepository repository
     PagedResourcesAssembler<Todo> pagedResourcesAssembler
+    CustomPagedResourceAssembler<Todo> customPagedResourceAssembler
     ResourceAssembler<Todo, TodoResource> todoResourceAssembler
 
 
     @Autowired
     TodoResourceServiceImpl(TodoRepository repository,
                             PagedResourcesAssembler<Todo> pagedResourcesAssembler,
-                            ResourceAssembler<Todo, TodoResource> todoResourceAssembler) {
+                            ResourceAssembler<Todo, TodoResource> todoResourceAssembler,
+                            CustomPagedResourceAssembler<Todo> customPagedResourceAssembler) {
         this.repository = repository
         this.pagedResourcesAssembler = pagedResourcesAssembler
         this.todoResourceAssembler = todoResourceAssembler
+        this.customPagedResourceAssembler = customPagedResourceAssembler
     }
 
     @Override
@@ -61,13 +66,12 @@ class TodoResourceServiceImpl implements TodoResourceService {
     }
 
     @Override
-    PagedResources<TodoResource> getPagedResource(int page, int limit) {
+    CustomPagedResources<TodoResource> getPagedResource(int page, int size) {
         Assert.notNull(page, "Page must not be null.")
-        Assert.notNull(limit, "Limit must not be null.")
-        Page<Todo> todoPage = repository.findAll(new PageRequest(page, limit))
+        Assert.notNull(size, "Limit must not be null.")
+        Page<Todo> todoPage = repository.findAll(new PageRequest(page, size))
 
-        return pagedResourcesAssembler.toResource(todoPage, todoResourceAssembler)
-
+        return customPagedResourceAssembler.toResource(todoPage, todoResourceAssembler)
     }
 
     @Override

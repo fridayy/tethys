@@ -1,19 +1,23 @@
 /**
+ *
+ * Stateless functional presentation component
+ *
  * Created by bnjm on 12/17/16.
  */
-import React, {Component} from 'react';
+import React from 'react';
 import {Link} from 'react-router';
 import './navigation.css';
 
-class Navigation extends Component {
-    render() {
+const Navigation = () => {
         return (
             <div className="navigation">
                 <Link to="/">Home</Link>
                 {" | "}
-                <Link to="todo">Todos</Link>
+                <Link to="paged">Todos (Paged)</Link>
+                {" | "}
+                <Link to="all">Todos (All)</Link>
             </div>
         )
-    }
-}
+};
+
 export default Navigation;

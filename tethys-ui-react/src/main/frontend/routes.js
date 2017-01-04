@@ -10,6 +10,9 @@ import TodoPage from './components/todo/TodoPage';
 
 export default (
     <Route path="/" component={App}>
-        <Route path="todo" component={TodoPage}/>
+        <Route path="paged" renderAll={false} component={TodoPage} />
+        <Route path="all" renderAll={true} component={TodoPage} />
+        <Route path="paged?style=1" renderAll={false} component={TodoPage} />
+        <Route path="all?style=1" renderAll={true} component={TodoPage} />
     </Route>
 );

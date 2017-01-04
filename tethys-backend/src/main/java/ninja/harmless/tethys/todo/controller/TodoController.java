@@ -1,5 +1,6 @@
 package ninja.harmless.tethys.todo.controller;
 
+import ninja.harmless.tethys.hateoas.CustomPagedResources;
 import ninja.harmless.tethys.todo.TodoResourceService;
 import ninja.harmless.tethys.todo.model.Todo;
 import ninja.harmless.tethys.todo.model.TodoResource;
@@ -32,18 +33,18 @@ public class TodoController {
     }
 
     /**
-     * Returns a paged representation of TodoResources limited by @param page.
+     * Returns a paged representation of TodoResources limited by @param page and @param size
      *
      * @param page
-     * @param limit
+     * @param size
      * @return
      */
     @RequestMapping(value = "/todos", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<PagedResources<TodoResource>> getTodoPages(
             @RequestParam(value = "page", defaultValue = "0") int page,
-            @RequestParam(value = "limit", defaultValue = "15") int limit) {
+            @RequestParam(value = "size", defaultValue = "15") int size) {
 
-        PagedResources<TodoResource> pagedTodoResource = todoService.getPagedResource(page, limit);
+        CustomPagedResources<TodoResource> pagedTodoResource = todoService.getPagedResource(page, size);
 
         return new ResponseEntity<>(pagedTodoResource, HttpStatus.OK);
     }

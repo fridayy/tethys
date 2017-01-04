@@ -4,7 +4,9 @@ import Navigation from './components/navigation/Navigation';
 import Header from './components/header/Header';
 
 /**
- * This class is rendered everytime and serves as the application layout
+ * This class is rendered everytime and serves as the application layout.
+ * The children prop is passed by react-router.
+ *
  * Created by bnjm on 12/17/16.
  */
 class App extends Component {
@@ -20,6 +22,7 @@ class App extends Component {
 }
 
 App.propTypes = {
+    // Passed by react router
     children: PropTypes.object.isRequired
 };
 export default App;
