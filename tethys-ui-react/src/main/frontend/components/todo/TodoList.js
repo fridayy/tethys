@@ -12,6 +12,7 @@ const TodoList = (props) => {
                 <TodoItem
                     key={todo.id}
                     todo={todo}
+                    onClickDelete={props.onClickDelete}
                 />
             )
         };
@@ -24,7 +25,8 @@ const TodoList = (props) => {
 }
 
 TodoList.propTypes = {
-    todos: PropTypes.array.isRequired
+    todos: PropTypes.array.isRequired,
+    onClickDelete: PropTypes.func.isRequired
 };
 
 export default TodoList;

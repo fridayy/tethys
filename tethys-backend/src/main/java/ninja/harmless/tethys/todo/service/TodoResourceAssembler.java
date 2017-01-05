@@ -28,4 +28,9 @@ public class TodoResourceAssembler extends ResourceAssemblerSupport<Todo, TodoRe
                                 entity.getDescription(), entity.getMarkedDone(),
                                 entity.getCreatedAt());
     }
+
+    public Todo fromResource(TodoResource resource) {
+        return new Todo(resource.getResourceId(), resource.getTitle(), resource.getDescription(),
+                resource.getMarkedDone(), resource.getCreatedAt());
+    }
 }

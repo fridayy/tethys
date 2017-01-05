@@ -14,9 +14,7 @@ import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.rest.webmvc.ResourceNotFoundException
 import org.springframework.data.web.PagedResourcesAssembler
-import org.springframework.hateoas.ResourceAssembler
 import org.springframework.stereotype.Component
-
 /**
  * Provides TodoResources for the TodoController
  *
@@ -28,13 +26,13 @@ class TodoResourceServiceImpl implements TodoResourceService {
     TodoRepository repository
     PagedResourcesAssembler<Todo> pagedResourcesAssembler
     CustomPagedResourceAssembler<Todo> customPagedResourceAssembler
-    ResourceAssembler<Todo, TodoResource> todoResourceAssembler
+    TodoResourceAssembler todoResourceAssembler
 
 
     @Autowired
     TodoResourceServiceImpl(TodoRepository repository,
                             PagedResourcesAssembler<Todo> pagedResourcesAssembler,
-                            ResourceAssembler<Todo, TodoResource> todoResourceAssembler,
+                            TodoResourceAssembler todoResourceAssembler,
                             CustomPagedResourceAssembler<Todo> customPagedResourceAssembler) {
         this.repository = repository
         this.pagedResourcesAssembler = pagedResourcesAssembler
@@ -43,7 +41,7 @@ class TodoResourceServiceImpl implements TodoResourceService {
     }
 
     @Override
-    TodoResource addResource(Todo todo) {
+    TodoResource add(Todo todo) {
         Assert.notNull(todo, "todo object cannot be null")
         if(repository.findByTitle(todo.title) != null) {
             throw new DuplicatedResourceException("wrong HTTP method. Use PUT.")
@@ -54,7 +52,7 @@ class TodoResourceServiceImpl implements TodoResourceService {
     }
 
     @Override
-    TodoResource upateResource(Todo todo) {
+    TodoResource update(Todo todo) {
         Assert.notNull(todo, "todo object cannot be null")
 
         if(repository.findByTitle(todo.title) != null) {
@@ -66,7 +64,7 @@ class TodoResourceServiceImpl implements TodoResourceService {
     }
 
     @Override
-    CustomPagedResources<TodoResource> getPagedResource(int page, int size) {
+    CustomPagedResources<TodoResource> get(int page, int size) {
         Assert.notNull(page, "Page must not be null.")
         Assert.notNull(size, "Limit must not be null.")
         Page<Todo> todoPage = repository.findAll(new PageRequest(page, size))
@@ -76,7 +74,7 @@ class TodoResourceServiceImpl implements TodoResourceService {
 
     @Override
     @EnableExceptionLogging
-    TodoResource getResourceById(String id) {
+    TodoResource getById(String id) {
         Assert.notNull(id, "Id must not be null")
         Todo todo = repository.findOne(id)
 
@@ -87,8 +85,19 @@ class TodoResourceServiceImpl implements TodoResourceService {
     }
 
     @Override
-    void deleteResourceById(String id) {
+    void delete(String id) {
         Assert.notNull(id, "Id must not be null")
         repository.delete(id)
+    }
+
+    @Override
+    void delete(Collection<TodoResource> items) {
+        Assert.notNull(items, "Items must not be null")
+        Assert.notEmpty(items, "Items cannot be empty")
+        def map = items.collect {it -> todoResourceAssembler.fromResource(it)}
+        // TODO: Temporary workaround due to a limitation in FONGO
+        map.each {
+            it -> repository.delete(it.id)
+        }
     }
 }

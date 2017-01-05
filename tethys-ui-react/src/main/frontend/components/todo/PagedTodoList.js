@@ -26,7 +26,8 @@ const PagedTodoList = (props) => {
             <small>Page: {props.page.number + 1}/{props.page.totalPages} | Total
                 Elements: {props.page.totalElements}</small>
             <TodoList
-                todos={props.todos}/>
+                todos={props.todos}
+                onClickDelete={props.onClickDelete}/>
             <div>
                 {prevButton} {nextButton}
             </div>
@@ -41,7 +42,8 @@ PagedTodoList.propTypes = {
     page: PropTypes.object.isRequired,
     links: PropTypes.object.isRequired,
     onNext: PropTypes.func.isRequired,
-    onPrev: PropTypes.func.isRequired
+    onPrev: PropTypes.func.isRequired,
+    onClickDelete: PropTypes.func.isRequired
 }
 
 export default PagedTodoList;

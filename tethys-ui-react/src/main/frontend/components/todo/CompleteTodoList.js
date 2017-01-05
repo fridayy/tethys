@@ -11,7 +11,10 @@ const CompleteTodoList = (props) => {
             <div>
                 <h1>Todos</h1>
                 <small>Total Elements: {props.page.totalElements}</small>
-                <TodoList todos={props.todos}/>
+                <TodoList
+                    todos={props.todos}
+                    onClickDelete={props.onClickDelete}
+                />
                 <small>Total Elements: {props.page.totalElements}</small>
             </div>
         )

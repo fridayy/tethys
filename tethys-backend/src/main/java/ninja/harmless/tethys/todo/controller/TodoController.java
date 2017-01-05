@@ -12,6 +12,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collection;
+
 import static ninja.harmless.tethys.hateoas.LinkBuilderAdapter.linkTo;
 import static ninja.harmless.tethys.hateoas.LinkBuilderAdapter.methodOn;
 
@@ -44,9 +46,21 @@ public class TodoController {
             @RequestParam(value = "page", defaultValue = "0") int page,
             @RequestParam(value = "size", defaultValue = "15") int size) {
 
-        CustomPagedResources<TodoResource> pagedTodoResource = todoService.getPagedResource(page, size);
+        CustomPagedResources<TodoResource> pagedTodoResource = todoService.get(page, size);
 
         return new ResponseEntity<>(pagedTodoResource, HttpStatus.OK);
+    }
+
+    /**
+     * Deletes multiple items
+     * @param items
+     * @return
+     */
+    @RequestMapping(value = "/todos", method = RequestMethod.DELETE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> deleteMultipleResources(@RequestBody Collection<TodoResource> items) {
+        todoService.delete(items);
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     /**
@@ -65,7 +79,7 @@ public class TodoController {
      */
     @RequestMapping(value = "/todo/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<TodoResource> getTodoResourceById(@PathVariable String id) {
-        TodoResource r = todoService.getResourceById(id);
+        TodoResource r = todoService.getById(id);
         r.add(linkTo(methodOn(TodoController.class).getTodoResourceById(id)).withSelfRel());
 
         return new ResponseEntity<>(r, HttpStatus.OK);
@@ -76,7 +90,7 @@ public class TodoController {
      */
     @RequestMapping(value = "/todo/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<?> deleteTodoResourceById(@PathVariable String id) {
-        todoService.deleteResourceById(id);
+        todoService.delete(id);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -88,7 +102,7 @@ public class TodoController {
      */
     @RequestMapping(value = "/todo", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<TodoResource> createTodoResource(@RequestBody Todo todo) {
-        TodoResource todoResource = todoService.addResource(todo);
+        TodoResource todoResource = todoService.add(todo);
 
         return new ResponseEntity<>(todoResource, HttpStatus.CREATED);
     }
@@ -100,7 +114,7 @@ public class TodoController {
      */
     @RequestMapping(value = "/todo", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> updateTodoResource(@RequestBody Todo todo) {
-        TodoResource todoResource = todoService.upateResource(todo);
+        TodoResource todoResource = todoService.update(todo);
         return new ResponseEntity<>(todoResource, HttpStatus.OK);
     }
 }

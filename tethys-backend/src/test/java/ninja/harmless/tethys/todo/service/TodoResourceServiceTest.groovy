@@ -32,14 +32,14 @@ class TodoResourceServiceTest extends Specification {
 
     void "getResourceById() should throw ResourceNotFoundException"() {
         when:
-            classUnderTest.getResourceById("test")
+            classUnderTest.getById("test")
         then:
             thrown(ResourceNotFoundException)
     }
 
     void "getResourceById() should throw IllegalArgumentExpection"() {
         when:
-            classUnderTest.getResourceById(null)
+            classUnderTest.getById(null)
         then:
             thrown(IllegalArgumentException)
     }
@@ -50,7 +50,7 @@ class TodoResourceServiceTest extends Specification {
             mockedRepository.findOne(_) >> new Todo("abc", "abc")
             mockedTodoResourceAssembler.toResource(_) >> new TodoResource()
         when:
-            def result = classUnderTest.getResourceById("1")
+            def result = classUnderTest.getById("1")
         then:
             result != null
             result instanceof TodoResource
@@ -58,14 +58,14 @@ class TodoResourceServiceTest extends Specification {
 
     void "deleteResourceById() invokes delete on repository"() {
         when:
-            classUnderTest.deleteResourceById("1")
+            classUnderTest.delete("1")
         then:
             1 * mockedRepository.delete(_)
     }
 
     void "deleteResourceById() throws IllegalArgumentException"() {
         when:
-            classUnderTest.deleteResourceById(null)
+            classUnderTest.delete(null)
         then:
             thrown(IllegalArgumentException)
     }
@@ -74,7 +74,7 @@ class TodoResourceServiceTest extends Specification {
         given:
             mockedRepository.findAll(_) >> new PageImpl<Todo>([])
         when:
-            def result = classUnderTest.getPagedResource(1,1)
+            def result = classUnderTest.get(1,1)
         then:
             1 * mockedRepository.findAll(_)
             result != null
@@ -86,21 +86,21 @@ class TodoResourceServiceTest extends Specification {
             Todo todo = new Todo("test", "test")
             mockedRepository.findByTitle("test") >> todo
         when:
-            classUnderTest.upateResource(todo)
+            classUnderTest.update(todo)
         then:
             1 * mockedRepository.save(todo)
     }
 
     void "updateResource() throws ResourceNotFoundException"() {
         when:
-            classUnderTest.upateResource(new Todo("a", "b"))
+            classUnderTest.update(new Todo("a", "b"))
         then:
             thrown(ResourceNotFoundException)
     }
 
     void "updateResource() throws IllegalArgumentException"() {
         when:
-            classUnderTest.upateResource(null)
+            classUnderTest.update(null)
         then:
             thrown(IllegalArgumentException)
     }
@@ -112,7 +112,7 @@ class TodoResourceServiceTest extends Specification {
             TodoResource todoResource = new TodoResource()
             mockedTodoResourceAssembler.toResource(_) >> todoResource
         when:
-            def result = classUnderTest.upateResource(todo)
+            def result = classUnderTest.update(todo)
         then:
             result != null
             result instanceof TodoResource
@@ -120,7 +120,7 @@ class TodoResourceServiceTest extends Specification {
 
     void "addResource() throws IllegalArgumentException"() {
         when:
-            classUnderTest.addResource(null)
+            classUnderTest.add(null)
         then:
             thrown(IllegalArgumentException)
     }
@@ -129,7 +129,7 @@ class TodoResourceServiceTest extends Specification {
         given:
             mockedRepository.findByTitle(_) >> new Todo()
         when:
-            classUnderTest.addResource(new Todo())
+            classUnderTest.add(new Todo())
         then:
             thrown(DuplicatedResourceException)
     }
@@ -138,7 +138,7 @@ class TodoResourceServiceTest extends Specification {
         given:
             mockedRepository.findByTitle(_) >> null
         when:
-            classUnderTest.addResource(new Todo())
+            classUnderTest.add(new Todo())
         then:
             1 * mockedRepository.save(_)
     }
@@ -148,7 +148,7 @@ class TodoResourceServiceTest extends Specification {
             mockedRepository.findByTitle(_) >> null
             mockedTodoResourceAssembler.toResource(_) >> new TodoResource()
         when:
-            def result = classUnderTest.addResource(new Todo())
+            def result = classUnderTest.add(new Todo())
         then:
             result != null
             result instanceof TodoResource

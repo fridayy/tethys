@@ -8,9 +8,10 @@ import ninja.harmless.tethys.todo.model.TodoResource
  * @author bnjm@harmless.ninja - 12/9/16.
  */
 interface TodoResourceService {
-    TodoResource addResource(Todo todo)
-    TodoResource upateResource(Todo todo)
-    CustomPagedResources<TodoResource> getPagedResource(int page, int size)
-    TodoResource getResourceById(String id)
-    void deleteResourceById(String id)
+    TodoResource add(Todo todo)
+    TodoResource update(Todo todo)
+    CustomPagedResources<TodoResource> get(int page, int size)
+    TodoResource getById(String id)
+    void delete(String id)
+    void delete(Collection<TodoResource> items)
 }

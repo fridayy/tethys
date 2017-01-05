@@ -1,6 +1,7 @@
 package ninja.harmless.tethys.todo.controller
 
 import ninja.harmless.tethys.todo.model.Todo
+import ninja.harmless.tethys.todo.repository.TodoRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
@@ -15,6 +16,8 @@ import spock.lang.Unroll
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 /**
+ * TodoController integration test
+ *
  * @author bnjm@harmless.ninja - 12/9/16.
  */
 @SpringBootTest
@@ -24,6 +27,9 @@ class TodoControllerTest extends Specification {
 
     @Autowired
     MockMvc mockMvc
+
+    @Autowired
+    TodoRepository todoRepository
 
     @Value('${tethys.apiVersion}')
     String apiVersion
@@ -77,6 +83,18 @@ class TodoControllerTest extends Specification {
             "todo/1" || status().isOk()
     }
 
+    void "DELETE Request to /todos with multiple items deletes those ressources"() {
+        given:
+            List<Todo> entities = [new Todo(resourceId: "998", title: "a", description: "b"), new Todo(resourceId: "999", title: "c", description: "d")]
+            List<String> jsonResources = []
+            entities.collect(jsonResources) { it -> it.toJsonString()}
+            todoRepository.save(entities)
+        when:
+            mockMvc.perform(delete("/$apiVersion/todos").contentType(MediaType.APPLICATION_JSON_VALUE).content(jsonResources.toListString())).andExpect(status().isOk())
+        then:
+            todoRepository.findOne("998") == null
+            todoRepository.findOne("999") == null
+    }
 
     @Unroll
     void "POST Request to #endpoint creates new resource"() {

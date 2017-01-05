@@ -39,6 +39,7 @@ public class BaseEntity {
         return Objects.hash(id);
     }
 
+
     public String toJsonString() {
         return "{ \"id\" : \""+ this.id+ "\"}";
     }
