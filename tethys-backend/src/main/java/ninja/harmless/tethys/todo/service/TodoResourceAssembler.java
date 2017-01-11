@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
  * @author bnjm@harmless.ninja - 12/10/16.
  */
 @Component
-public class TodoResourceAssembler extends ResourceAssemblerSupport<Todo, TodoResource>{
+public class TodoResourceAssembler extends ResourceAssemblerSupport<Todo, TodoResource> {
 
 
     /**

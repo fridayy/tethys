@@ -25,5 +25,6 @@ class TodoResourceAssemblerTest extends Specification {
         then:
             result.description == todo.description
             result.title == todo.title
+            result instanceof Todo
     }
 }

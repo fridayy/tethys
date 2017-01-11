@@ -1,17 +1,19 @@
 package ninja.harmless.tethys.todo.service
 
+import ninja.harmless.tethys.hateoas.CustomPagedResourceAssembler
+import ninja.harmless.tethys.hateoas.CustomPagedResources
 import ninja.harmless.tethys.test.annotation.UnitTest
 import ninja.harmless.tethys.todo.TodoResourceService
 import ninja.harmless.tethys.todo.exception.DuplicatedResourceException
 import ninja.harmless.tethys.todo.model.Todo
 import ninja.harmless.tethys.todo.model.TodoResource
 import ninja.harmless.tethys.todo.repository.TodoRepository
+import ninja.harmless.tethys.todo.service.mocks.CustomPagedResourceAssemblerMock
+import ninja.harmless.tethys.todo.service.mocks.TodoResourceAssemblerMock
 import org.springframework.data.domain.PageImpl
 import org.springframework.data.rest.webmvc.ResourceNotFoundException
-import org.springframework.data.web.PagedResourcesAssembler
-import org.springframework.hateoas.PagedResources
-import org.springframework.hateoas.ResourceAssembler
 import spock.lang.Specification
+
 /**
  * @author bnjm@harmless.ninja - 12/17/16.
  */
@@ -20,14 +22,14 @@ class TodoResourceServiceTest extends Specification {
 
     TodoResourceService classUnderTest
     TodoRepository mockedRepository
-    PagedResourcesAssembler<Todo> mockedPagedResourcesAssembler
-    ResourceAssembler<Todo, TodoResource> mockedTodoResourceAssembler
+    TodoResourceAssembler mockedTodoResourceAssembler
+    CustomPagedResourceAssembler<Todo> mockedCustomPagedAssembler
 
     void setup() {
         mockedRepository = Mock(TodoRepository)
-        mockedPagedResourcesAssembler = new PagedResourcesAssemblerMock<Todo>(null, null)
-        mockedTodoResourceAssembler = Mock(ResourceAssembler)
-        classUnderTest = new TodoResourceServiceImpl(mockedRepository, mockedPagedResourcesAssembler, mockedTodoResourceAssembler)
+        mockedTodoResourceAssembler = new TodoResourceAssemblerMock()
+        mockedCustomPagedAssembler = new CustomPagedResourceAssemblerMock<>(null, null)
+        classUnderTest = new TodoResourceServiceImpl(mockedRepository, mockedTodoResourceAssembler, mockedCustomPagedAssembler)
     }
 
     void "getResourceById() should throw ResourceNotFoundException"() {
@@ -78,7 +80,7 @@ class TodoResourceServiceTest extends Specification {
         then:
             1 * mockedRepository.findAll(_)
             result != null
-            result instanceof PagedResources<TodoResource>
+            result instanceof CustomPagedResources<TodoResource>
     }
 
     void "updateResource() invokes save on repository if a todo can be updated"() {

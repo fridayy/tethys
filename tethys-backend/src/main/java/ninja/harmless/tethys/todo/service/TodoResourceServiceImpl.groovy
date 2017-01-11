@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.rest.webmvc.ResourceNotFoundException
-import org.springframework.data.web.PagedResourcesAssembler
 import org.springframework.stereotype.Component
 /**
  * Provides TodoResources for the TodoController
@@ -24,18 +23,15 @@ import org.springframework.stereotype.Component
 class TodoResourceServiceImpl implements TodoResourceService {
 
     TodoRepository repository
-    PagedResourcesAssembler<Todo> pagedResourcesAssembler
     CustomPagedResourceAssembler<Todo> customPagedResourceAssembler
     TodoResourceAssembler todoResourceAssembler
 
 
     @Autowired
     TodoResourceServiceImpl(TodoRepository repository,
-                            PagedResourcesAssembler<Todo> pagedResourcesAssembler,
                             TodoResourceAssembler todoResourceAssembler,
                             CustomPagedResourceAssembler<Todo> customPagedResourceAssembler) {
         this.repository = repository
-        this.pagedResourcesAssembler = pagedResourcesAssembler
         this.todoResourceAssembler = todoResourceAssembler
         this.customPagedResourceAssembler = customPagedResourceAssembler
     }
