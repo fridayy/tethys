@@ -13,7 +13,7 @@ dependencies {
 
 // Runs the build script from package.json
 npm_run {
-    args = ['build --verbose']
+    args = ['build', '--verbose']
 }
 
 task copyResources {
