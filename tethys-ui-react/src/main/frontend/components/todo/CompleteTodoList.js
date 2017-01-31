@@ -7,22 +7,24 @@ import React, {PropTypes} from 'react';
 import TodoList from './TodoList';
 
 const CompleteTodoList = (props) => {
+
+        let totalElements = props.todos.length;
+
         return(
             <div>
                 <h1>Todos</h1>
-                <small>Total Elements: {props.page.totalElements}</small>
+                <small>Total Elements: {totalElements}</small>
                 <TodoList
                     todos={props.todos}
                     onClickDelete={props.onClickDelete}
                 />
-                <small>Total Elements: {props.page.totalElements}</small>
+                <small>Total Elements: {totalElements}</small>
             </div>
         )
 };
 
 CompleteTodoList.propTypes = {
-    todos: PropTypes.array.isRequired,
-    page: PropTypes.object.isRequired
+    todos: PropTypes.array.isRequired
 };
 
 export default CompleteTodoList;

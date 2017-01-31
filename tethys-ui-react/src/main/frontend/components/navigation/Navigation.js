@@ -16,6 +16,8 @@ const Navigation = () => {
                 <Link to="paged">Todos (Paged)</Link>
                 {" | "}
                 <Link to="all">Todos (All)</Link>
+                {" | "}
+                <Link to="benchmark">Benchmark</Link>
             </div>
         )
 };

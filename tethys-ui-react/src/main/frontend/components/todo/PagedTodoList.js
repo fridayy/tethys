@@ -19,7 +19,8 @@ const PagedTodoList = (props) => {
 
     return (
         <div>
-            <h1>Todos</h1>
+            <h1>Todos (Paged)</h1>
+            <small>No browser storage</small>
             <div>
                 {prevButton} {nextButton}
             </div>
@@ -44,6 +45,6 @@ PagedTodoList.propTypes = {
     onNext: PropTypes.func.isRequired,
     onPrev: PropTypes.func.isRequired,
     onClickDelete: PropTypes.func.isRequired
-}
+};
 
 export default PagedTodoList;

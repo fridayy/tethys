@@ -1,7 +1,7 @@
 /**
  * Created by bnjm on 1/5/17.
  */
-import React, {Component, PropTypes} from 'react';
+import React, {PropTypes} from 'react';
 
 const Button = ({children, className, label, onClick, type = 'button'}) => {
     return (
@@ -16,11 +16,11 @@ const Button = ({children, className, label, onClick, type = 'button'}) => {
 };
 
 Button.propTypes = {
-    children: React.PropTypes.node,
-    className: React.PropTypes.string,
-    label: React.PropTypes.string,
-    onClick: React.PropTypes.func,
-    type: React.PropTypes.oneOf(['button', 'reset', 'submit'])
+    children: PropTypes.node,
+    className: PropTypes.string,
+    label: PropTypes.string,
+    onClick: PropTypes.func,
+    type: PropTypes.oneOf(['button', 'reset', 'submit'])
 };
 
 export default Button;

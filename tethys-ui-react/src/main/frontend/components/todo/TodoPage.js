@@ -11,6 +11,7 @@ import PagedTodoList from './PagedTodoList';
 import localForage from 'localforage';
 import moment from 'moment';
 import TodoStoragePanel from './TodoStoragePanel';
+import CloseableAlert from '../alert/CloseableAlert';
 
 class TodoPage extends Component {
 
@@ -22,15 +23,11 @@ class TodoPage extends Component {
             links: '',
             page: '',
             renderAll: this.props.route.renderAll,
-            lastSynched: ''
+            lastSynched: '',
+            showAlert: false
         };
 
-        // If renderAll is passed as prop from react-router all entries shall be shown
-        if (this.state.renderAll) {
-            this._getAllEntries();
-        } else {
-            this._getPagedEntries("0", "/v1/todos");
-        }
+        this._checkState();
 
         // Method bindings
         this._getNextPage = this._getNextPage.bind(this);
@@ -39,6 +36,7 @@ class TodoPage extends Component {
         this._getPagedEntries = this._getPagedEntries.bind(this);
         this._getAllEntries = this._getAllEntries.bind(this);
         this._onClickDelete = this._onClickDelete.bind(this);
+        this._deleteEntry = this._deleteEntry.bind(this);
     }
 
     // If the renderAll prop changes render the correct version of the page
@@ -48,6 +46,15 @@ class TodoPage extends Component {
             this._getAllEntries();
         } else {
             this._getPagedEntries(this.state.page.number, "/v1/todos");
+        }
+    }
+
+    _checkState() {
+        // If renderAll is passed as prop from react-router all entries shall be shown
+        if (this.state.renderAll) {
+            this._getAllEntries();
+        } else {
+            this._getPagedEntries("/v1/todos");
         }
     }
 
@@ -62,66 +69,101 @@ class TodoPage extends Component {
             .catch(err => console.log(err));
     }
 
-    _getEntries(key, fallBackURL) {
-        // Check if the entry exists already in IndexedDB and set corresponding state
-        localForage.getItem(key).then(value => {
-            this.setState({
-                todos: value._embedded.todoResources,
-                page: value.page,
-                links: value._links,
-                lastSynched: value.accessed.creationTime
-            })
-            // If it does not exist already try to get the items from the backend
-        }).catch(err => {
-            this._getEntriesRemotely(key, this._get(fallBackURL))
-        })
+    // Deletes a given resource
+    _delete(url) {
+        return fetch(url, {
+            method: "DELETE"
+        }).catch(err => console.log(err));
     }
 
-    _getEntriesRemotely(key, data) {
+    _deleteEntry(key, deleteUrl) {
+        localForage.removeItem(key).then(res => {
+            this._delete(deleteUrl).then(res => {
+                this._checkState();
+            });
+        }).catch(err => console.log(err));
+    }
+
+    _getEntries(fallBackURL) {
+        let todos = [];
+
+        localForage.getItem("lastSync").then(result => { this.setState({lastSynched : result}) });
+
+        localForage.length().then(numberOfKeys => {
+            if (numberOfKeys === 0 || this._checkForSync(this.state.lastSynched)) {
+                this.setState({showAlert: true});
+                this._getEntriesRemotely(this._get(fallBackURL));
+            }
+        });
+        localForage.iterate((value, key, iterationNumber) => {
+            todos.push(value);
+        }).then(() => {
+            this.setState({todos: todos,
+                           lastSynched: this.state.lastSynched});
+        });
+    }
+
+    _getEntriesRemotely(data) {
         data.then(d => {
                 this.setState({
                     todos: d._embedded.todoResources,
                     page: d.page,
                     links: d._links,
                     lastSynched: d.accessed.creationTime
-                })
+                });
                 // If there is no key passed use the pagination number returned by the backend
-                if (key === null) {
-                    this._saveEntriesToStorage(d.page.number.toString(), d)
-                } else {
-                    this._saveEntriesToStorage(key, d)
-                }
+                this._saveEntriesToStorage(d._embedded.todoResources);
+                this._saveLastSync(d.accessed.creationTime);
             }
         ).catch(err => console.log(err));
     }
 
-    _saveEntriesToStorage(key, value) {
-        localForage.setItem(key, value)
-            .catch(err => console.log(err));
+    _saveEntriesToStorage(value) {
+        value.forEach(entry => {
+            localForage.setItem(entry.resourceId.toString(), entry).catch(err => console.log(err));
+        })
+    }
+
+    _saveLastSync(value) {
+        localForage.setItem("lastSync", value);
     }
 
     _getAllEntries() {
-        this._getEntries("todos", "/v1/todos?size=1000000")
+        this._getEntries("/v1/todos?size=1000000")
     }
 
-    _getPagedEntries(page, url) {
-        this._getEntries(page, url)
+    _getPagedEntries(url) {
+        this._getEntriesRemotely(this._get(url));
     }
 
     _getNextPage() {
         let url = this.state.links.next.href;
         url = url.split("8000/")[1];
-        this._getPagedEntries((this.state.page.number + 1).toString(), url);
+        this._getPagedEntries(url);
     }
 
     _getPreviousPage() {
         let url = this.state.links.prev.href;
         url = url.split("8000/")[1];
-        this._getPagedEntries((this.state.page.number.toString() - 1), url);
+        this._getPagedEntries(url);
     }
 
     _onClickDelete(resourceId) {
         console.log(resourceId);
+        this._deleteEntry(resourceId, "/v1/todo/" + resourceId);
+    }
+
+    /**
+     * Checks if its time to sync
+     * @param lastSync
+     * @returns {boolean}
+     * @private
+     */
+    _checkForSync(lastSync) {
+        if(moment().isSameOrAfter(moment(lastSync).add(30, 's'))) {
+            return true;
+        }
+        return false;
     }
 
 
@@ -132,11 +174,11 @@ class TodoPage extends Component {
         if (renderAll) {
             return (
                 <div>
+                    <CloseableAlert visible={this.state.showAlert} alertType="info" title="Synchronize!" text="Getting Todos remotely."/>
                     <b>Last Synch: {lastSynch} </b>
                     <TodoStoragePanel/>
                     <CompleteTodoList
                         todos={this.state.todos}
-                        page={this.state.page}
                         onClickDelete={this._onClickDelete}
                     />
                 </div>
@@ -144,8 +186,6 @@ class TodoPage extends Component {
         } else {
             return (
                 <div>
-                    <b>Last Synch: {lastSynch} </b>
-                    <TodoStoragePanel/>
                     <PagedTodoList
                         todos={this.state.todos}
                         page={this.state.page}
