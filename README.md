@@ -12,6 +12,11 @@ Tethys is currently work in progress and everything is subject to change!
 In order to run Tethys at its current you may use a native [MongoDB](https://www.mongodb.com/) instance (set in application.properties)
 or use the in-memory Fongo.
 
+For working metrics [phantomas](https://github.com/macbre/phantomas) must be installed globally.
+```sh
+npm install --global --no-optional phantomas phantomjs-prebuilt@^2.1.5
+```
+
 #### Build
 Tethys can be build with or without docker.
 
