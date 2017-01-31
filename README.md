@@ -7,6 +7,10 @@ The main goal of this application is to provide a prototype todo application in 
 
 Tethys is currently work in progress and everything is subject to change!
 
+## Requirements
+* [gradle](https://github.com/gradle/gradle)
+* [NPM](https://www.npmjs.com/) 3+
+
 ## Running Tethys
 
 In order to run Tethys at its current you may use a native [MongoDB](https://www.mongodb.com/) instance (set in application.properties)
