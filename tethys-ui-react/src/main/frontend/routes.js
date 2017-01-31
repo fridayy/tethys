@@ -3,6 +3,7 @@ import {Route} from 'react-router';
 import App from './App';
 import TodoPage from './components/todo/TodoPage';
 import BenchmarkPage from './components/benchmark/BenchmarkPage';
+import MetricPage from './components/metric/MetricPage';
 
 
 /**
@@ -15,6 +16,7 @@ export default (
         <Route path="all" renderAll={true} component={TodoPage}/>
         <Route path="paged?style=1" renderAll={false} component={TodoPage}/>
         <Route path="all?style=1" renderAll={true} component={TodoPage}/>
-        <Route path="benchmark" component={BenchmarkPage} />
+        <Route path="benchmark" component={BenchmarkPage}/>
+        <Route path="metrics" component={MetricPage} />
     </Route>
 );

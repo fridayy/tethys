@@ -18,6 +18,8 @@ const Navigation = () => {
                 <Link to="all">Todos (All)</Link>
                 {" | "}
                 <Link to="benchmark">Benchmark</Link>
+                {" | "}
+                <Link to="metrics">Metrics</Link>
             </div>
         )
 };
