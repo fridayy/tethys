@@ -40,8 +40,8 @@ const PagedTodoList = (props) => {
 
 PagedTodoList.propTypes = {
     todos: PropTypes.array.isRequired,
-    page: PropTypes.object.isRequired,
-    links: PropTypes.object.isRequired,
+    page: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
+    links: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
     onNext: PropTypes.func.isRequired,
     onPrev: PropTypes.func.isRequired,
     onClickDelete: PropTypes.func.isRequired

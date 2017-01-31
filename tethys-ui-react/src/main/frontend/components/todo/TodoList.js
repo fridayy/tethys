@@ -10,7 +10,7 @@ const TodoList = (props) => {
         let createEntryRow = function (todo) {
             return (
                 <TodoItem
-                    key={todo.id}
+                    key={todo.resourceId}
                     todo={todo}
                     onClickDelete={props.onClickDelete}
                 />

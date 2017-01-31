@@ -52,7 +52,7 @@ class BenchmarkPage extends Component {
 
 
     render() {
-        let row = this.state.store.data.map((d,i) => {
+        let row = this.state.store.data.map((d) => {
             return <TableRow key={d.id} data={d} />
         });
         return (<div>

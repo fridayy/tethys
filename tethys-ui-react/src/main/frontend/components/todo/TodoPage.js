@@ -199,7 +199,7 @@ class TodoPage extends Component {
 }
 
 TodoPage.propTypes = {
-    renderAll: PropTypes.bool.isRequired
+    renderAll: PropTypes.bool
 };
 
 export default TodoPage;

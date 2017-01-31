@@ -1,7 +1,7 @@
 /**
  * Created by bnjm on 1/29/17.
  */
-import React, {Component} from 'react';
+import React from 'react';
 import './Benchmark.css';
 
 const TableRow = (props) => {

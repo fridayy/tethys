@@ -23,6 +23,6 @@ class App extends Component {
 
 App.propTypes = {
     // Passed by react router
-    children: PropTypes.object.isRequired
+    children: PropTypes.object
 };
 export default App;

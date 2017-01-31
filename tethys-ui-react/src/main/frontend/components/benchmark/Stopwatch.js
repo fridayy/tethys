@@ -15,7 +15,7 @@ export default class Stopwatch {
 
     start() {
         if(this.running) {
-            throw "Stopwatch already running!";
+            throw String("Stopwatch already running!");
         }
         this.running = true;
         this.startTime = performance.now();
@@ -24,7 +24,7 @@ export default class Stopwatch {
 
     stop() {
         if(!this.running) {
-            throw "Stopwatch not running";
+            throw String("Stopwatch not running");
         }
         this.endTime = performance.now();
         this.totalTime = this.endTime - this.startTime;
