@@ -10,7 +10,6 @@ import org.springframework.context.annotation.Conditional
 import org.springframework.stereotype.Component
 
 import javax.annotation.PostConstruct
-
 /**
  * Post construction this bean will populate the fongo in memory db
  * with random data for testing purposes.
@@ -29,12 +28,17 @@ class FongoImporterBean {
 
     @PostConstruct
     void importDataIntoFongo() {
-        repository.save(generateTodos(numberOfDatasets))
+        repository.save(generateTodos(0, numberOfDatasets))
     }
 
-    List<Todo> generateTodos(int count) {
+
+    void importAdditionalData(int count) {
+        repository.insert(generateTodos(repository.findAll().size(), count))
+    }
+
+    List<Todo> generateTodos(int start, int count) {
         List<Todo> todoList = []
-        (0..<count).each {
+        (start..<(count + start)).each {
             todoList << generateTodoItem(it)
         }
         return new ImmutableList<Todo>(todoList)

@@ -1,5 +1,6 @@
 package ninja.harmless.tethys.todo.controller;
 
+import ninja.harmless.tethys.configuration.FongoImporterBean;
 import ninja.harmless.tethys.hateoas.CustomPagedResources;
 import ninja.harmless.tethys.todo.TodoResourceService;
 import ninja.harmless.tethys.todo.model.Todo;
@@ -28,10 +29,12 @@ import static ninja.harmless.tethys.hateoas.LinkBuilderAdapter.methodOn;
 public class TodoController {
 
     TodoResourceService todoService;
+    FongoImporterBean fongoImporterBean;
 
     @Autowired
-    TodoController(TodoResourceService todoService) {
+    public TodoController(TodoResourceService todoService, FongoImporterBean fongoImporterBean) {
         this.todoService = todoService;
+        this.fongoImporterBean = fongoImporterBean;
     }
 
     /**
@@ -116,5 +119,11 @@ public class TodoController {
     public ResponseEntity<?> updateTodoResource(@RequestBody Todo todo) {
         TodoResource todoResource = todoService.update(todo);
         return new ResponseEntity<>(todoResource, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/todos/generate", method = RequestMethod.GET)
+    public ResponseEntity<?> generateTodods(@RequestParam(value = "n", defaultValue = "100") int count) {
+        fongoImporterBean.importAdditionalData(count);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 }
