@@ -1,0 +1,50 @@
+<h4>
+  {{title}}
+</h4>
+<div *ngIf="showAll == true">
+  <div *ngFor="let item of todoItems" class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">{{item.title}} <button class="close" (click)="delete(item)"><i class="fa fa-times fa-fw" aria-hidden="true"></i></button></h3>
+
+    </div>
+    <div class="panel-body">
+      {{item.description}}
+    </div>
+    <div class="panel-footer"><small>{{item.createdAt | date:'medium'}}</small></div>
+  </div>
+</div>
+
+<div *ngIf="showAll == false">
+  <small>Total Elements: {{pageMetadata.totalElements }}</small>
+  <nav aria-label="...">
+    <ul class="pagination">
+      <li class="disabled"><a href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+      <li *ngFor="let page of pages"><a href="#">{{page}}</a></li>
+      <li>
+        <a href="#" aria-label="Next">
+          <span aria-hidden="true">&raquo;</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+  <div *ngFor="let item of pagedTodoResources.resources" class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">{{item.title}} <button class="close" (click)="delete(item)"><i class="fa fa-times fa-fw" aria-hidden="true"></i></button></h3>
+    </div>
+    <div class="panel-body">
+      {{item.description}}
+    </div>
+    <div class="panel-footer"><small>{{item.createdAt | date:'medium'}}</small></div>
+  </div>
+  <nav aria-label="...">
+    <ul class="pagination">
+      <li class="disabled"><a href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+      <li *ngFor="let page of pages"><a href="#">{{page}}</a></li>
+      <li>
+        <a href="#" aria-label="Next">
+          <span aria-hidden="true">&raquo;</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+</div>

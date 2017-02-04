@@ -25,7 +25,7 @@ import static ninja.harmless.tethys.hateoas.LinkBuilderAdapter.methodOn;
  */
 @RestController
 @RequestMapping(value = "${tethys.apiVersion}")
-@CrossOrigin(origins = {"${tethys.frontend.angularUrl}", "${tethys.frontend.angularUrl}"})
+@CrossOrigin(origins = {"${tethys.frontend.reactUrl}", "${tethys.frontend.angularUrl}", "${tethys.frontend.angularDevUrl}", "${tethys.frontend.reactDevUrl}"})
 public class TodoController {
 
     TodoResourceService todoService;

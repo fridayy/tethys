@@ -15,7 +15,7 @@ tethys:
   apiVersion: v1
   frontend:
     angularUrl: http://localhost:8080
-    angularDevUrl: http://localhost:8080
+    angularDevUrl: http://localhost:4200
     reactUrl: http://localhost:8080
     reactDevUrl: http://localhost:3000
   fongo:

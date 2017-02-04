@@ -1,0 +1,9 @@
+{
+  "/paged" : {
+    "target" : "http://localhost:8000/v1/todos"
+  },
+
+  "/all" : {
+    "target" : "http://localhost:8000/v1/todos?page=0&size=10000000"
+  }
+}
