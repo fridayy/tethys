@@ -35,6 +35,12 @@ export class TodoComponent implements OnInit {
       .then(result => this.todoItems = result as TodoResource[]);
   }
 
+  setShowAll() {
+    this.showAll = !this.showAll;
+    this.pages = [];
+    this.ngOnInit();
+  }
+
   getPagedTodoResources(): void {
     this.todoProviderService
       .getPaged(0, 15)

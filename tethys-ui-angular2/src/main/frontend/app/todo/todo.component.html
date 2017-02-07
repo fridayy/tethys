@@ -2,6 +2,7 @@
   {{title}}
 </h4>
 <div *ngIf="showAll == true">
+  <button (click)="setShowAll()">Show Paged</button>
   <div *ngFor="let item of todoItems" class="panel panel-default">
     <div class="panel-heading">
       <h3 class="panel-title">{{item.title}} <button class="close" (click)="delete(item)"><i class="fa fa-times fa-fw" aria-hidden="true"></i></button></h3>
@@ -16,6 +17,7 @@
 
 <div *ngIf="showAll == false">
   <small>Total Elements: {{pageMetadata.totalElements }}</small>
+  <button (click)="setShowAll()">Show all</button>
   <nav aria-label="...">
     <ul class="pagination">
       <li class="disabled"><a href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>

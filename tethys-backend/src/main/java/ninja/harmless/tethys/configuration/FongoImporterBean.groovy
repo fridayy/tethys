@@ -62,7 +62,7 @@ class FongoImporterBean {
         return verbs[RandomUtils.nextInt(0, verbs.size() - 1)] + " " + what[RandomUtils.nextInt(0, what.size())] + "!"
     }
 
-    private String generateDescription(List<String> pre, List<String> verbs, List<String> counts,
+    private String generateDescription(List<String> pre, List<String> verbs,
                                        List<String> when, List<String> what) {
 
 
