@@ -1,15 +1,16 @@
 import {Routes, RouterModule} from "@angular/router";
 import {HomeComponent} from "./components/home/home.component";
-import {TodoComponent} from "./components/todo/todo.component";
+import {TodoComponent} from "./components/todo-list/todo.component";
 import {ErrorComponent} from "./components/error/error.component";
 import {MetricComponent} from "./components/metric/metric.component";
+import {TodoMediator} from "./mediators/todo/todo-mediator.component";
 /**
  * Created by bnjm on 3/11/17.
  */
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
-  {path: 'todos', component: TodoComponent},
+  {path: 'todos', component: TodoMediator},
   {path: 'metrics', component: MetricComponent},
   {path: '**', component: ErrorComponent}
 ];

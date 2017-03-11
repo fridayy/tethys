@@ -1,0 +1,13 @@
+<h4>
+{{title}}
+</h4>
+<div class="center-block">
+<div *ngFor="let item of todoResource.todoResources" class="panel panel-default">
+<div class="panel-heading">
+<h3 class="panel-title">{{item.title}} <button class="close" (click)="delete(item)"><i class="fa fa-times fa-fw" aria-hidden="true"></i></button></h3>
+
+</div>
+<div class="panel-body">
+{{item.description}}
+</div>
+</div>

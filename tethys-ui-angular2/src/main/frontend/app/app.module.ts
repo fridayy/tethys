@@ -3,7 +3,7 @@ import {NgModule} from "@angular/core";
 import {FormsModule} from "@angular/forms";
 import {HttpModule} from "@angular/http";
 import {AppComponent} from "./app.component";
-import {TodoComponent} from "./components/todo/todo.component";
+import {TodoComponent} from "./components/todo-list/todo.component";
 import {HeaderComponent} from "./components/header/header.component";
 import {NavigationComponent} from "./components/navigation/navigation.component";
 import {SimpleComponent} from "./components/di-test/simple.component";
@@ -12,6 +12,9 @@ import {routing} from "./app.routing";
 import {HomeComponent} from "./components/home/home.component";
 import {ErrorComponent} from "./components/error/error.component";
 import {MetricComponent} from "./components/metric/metric.component";
+import {TodoMediator} from "./mediators/todo/todo-mediator.component";
+import { ListComponent } from './components/list/list.component';
+import { TodoListMetadataComponent } from './components/todo-list-metadata/todo-list-metadata.component';
 /**
  * app.module.ts
  * Angular2 modules help us organizes our application into cohesive blocḱs of functionality and provide boundaries
@@ -30,7 +33,9 @@ import {MetricComponent} from "./components/metric/metric.component";
     NavigationComponent,
     MetricComponent,
     SimpleComponent,
-    ErrorComponent
+    ErrorComponent,
+    TodoListMetadataComponent,
+    TodoMediator
   ],
   imports: [
     BrowserModule,
