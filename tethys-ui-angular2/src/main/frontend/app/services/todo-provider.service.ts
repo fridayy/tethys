@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
-import {TodoResource} from "./todoResource";
+import {TodoResource} from "../components/todo/todoResource";
 import {Http} from '@angular/http';
 import 'rxjs/add/operator/toPromise';
-import {PagedTodoResource, PagedTodoResourceImpl} from "./pagedTodoResource";
-import {PageMetadata} from "./pageMetadata";
+import {PagedTodoResource, PagedTodoResourceImpl} from "../components/todo/pagedTodoResource";
+import {PageMetadata} from "../components/todo/pageMetadata";
 
 /**
  * TodoProviderService - Fetches and modifies TodoResources from the backend API.

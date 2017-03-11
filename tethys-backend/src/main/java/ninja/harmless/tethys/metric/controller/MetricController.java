@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping(value = "${tethys.apiVersion}")
-@CrossOrigin(origins = {"${tethys.frontend.angularUrl}", "${tethys.frontend.angularUrl}"})
+@CrossOrigin(origins = {"${tethys.frontend.reactUrl}", "${tethys.frontend.angularUrl}", "${tethys.frontend.angularDevUrl}", "${tethys.frontend.reactDevUrl}"})
 public class MetricController {
 
     private PhantomasService phantomasService;

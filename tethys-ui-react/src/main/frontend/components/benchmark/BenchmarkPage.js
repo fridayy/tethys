@@ -14,11 +14,13 @@ class BenchmarkPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            store: new Data()
+            store: new Data(),
+            count: 0
         };
 
         this.startBenchmark = this.startBenchmark.bind(this);
         this.updateTables = this.updateTables.bind(this);
+        this.clearAll = this.clearAll.bind(this);
     }
 
     componentDidMount() {
@@ -35,11 +37,10 @@ class BenchmarkPage extends Component {
        }
     }
 
-
     startBenchmark() {
         watch = new Stopwatch("Create tables");
         watch.start();
-        this.state.store.run();
+        this.state.store.run(this.state.count);
         this.setState({store: this.state.store});
     }
 
@@ -50,14 +51,22 @@ class BenchmarkPage extends Component {
         this.setState({store: this.state.store});
     }
 
+    clearAll() {
+        watch = new Stopwatch("Clear tables");
+        watch.start();
+        this.state.store.clear();
+        this.setState({store: this.state.store});
+    }
 
     render() {
         let row = this.state.store.data.map((d) => {
             return <TableRow key={d.id} data={d} />
         });
         return (<div>
+            Count: <input type="text" onChange={(e) => {this.setState({count: e.target.value})}} value={this.state.count}/>
             <Button onClick={this.startBenchmark}>Start</Button>
             <Button onClick={this.updateTables}>Update</Button>
+            <Button onClick={this.clearAll}>Clear</Button>
             <p>Total Rows: {this.state.store.data.length}</p>
             <table className="table table-bordered">
                 <tbody>{row}</tbody>

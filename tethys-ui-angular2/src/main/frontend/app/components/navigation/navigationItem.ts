@@ -3,6 +3,7 @@
  */
 export interface NavigationItem {
   label: string;
+  link: string;
   isActive: boolean;
 
   setActive() :void;
@@ -10,7 +11,7 @@ export interface NavigationItem {
 }
 
 export class NavigationItem implements NavigationItem {
-  constructor(public label: string, public isActive:boolean) { }
+  constructor(public label: string, public link: string, public isActive:boolean) { }
 
   setActive() { this.isActive = !this.isActive }
 

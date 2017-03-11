@@ -1,5 +1,5 @@
 <ul class="nav nav-tabs">
   <li *ngFor="let item of navigationItems" role="presentation" class="{{item.getClass()}}">
-    <a href="#" (click)="changeActive(item)">{{item.label}}</a>
+    <a [routerLink]="[item.link]" (click)="changeActive(item)">{{item.label}}</a>
   </li>
 </ul>

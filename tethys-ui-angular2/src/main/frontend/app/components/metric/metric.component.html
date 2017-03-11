@@ -1,0 +1,18 @@
+<h3>{{title}}</h3>
+<small>provided by: <a href="https://github.com/macbre/phantomas">phantomas v1.18.0</a></small>
+<div class="center-block">
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th>Metric</th>
+      <th>Result</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let metric of metrics.items">
+      <td>{{metric.key}}</td>
+      <td>{{metric.value}}</td>
+    </tr>
+    </tbody>
+  </table>
+</div>

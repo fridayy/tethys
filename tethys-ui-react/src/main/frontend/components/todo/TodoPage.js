@@ -12,6 +12,7 @@ import localForage from 'localforage';
 import moment from 'moment';
 import TodoStoragePanel from './TodoStoragePanel';
 import CloseableAlert from '../alert/CloseableAlert';
+import {BACKEND_URL} from '../../commons/constants';
 
 class TodoPage extends Component {
 
@@ -54,7 +55,7 @@ class TodoPage extends Component {
         if (this.state.renderAll) {
             this._getAllEntries();
         } else {
-            this._getPagedEntries("/v1/todos");
+            this._getPagedEntries(BACKEND_URL + "/todos");
         }
     }
 
@@ -87,7 +88,9 @@ class TodoPage extends Component {
     _getEntries(fallBackURL) {
         let todos = [];
 
-        localForage.getItem("lastSync").then(result => { this.setState({lastSynched : result}) });
+        localForage.getItem("lastSync").then(result => {
+            this.setState({lastSynched: result})
+        });
 
         localForage.length().then(numberOfKeys => {
             if (numberOfKeys === 0 || this._checkForSync(this.state.lastSynched)) {
@@ -98,8 +101,10 @@ class TodoPage extends Component {
         localForage.iterate((value, key, iterationNumber) => {
             todos.push(value);
         }).then(() => {
-            this.setState({todos: todos,
-                           lastSynched: this.state.lastSynched});
+            this.setState({
+                todos: todos,
+                lastSynched: this.state.lastSynched
+            });
         });
     }
 
@@ -129,7 +134,7 @@ class TodoPage extends Component {
     }
 
     _getAllEntries() {
-        this._getEntries("/v1/todos?size=1000000")
+        this._getEntries(BACKEND_URL + "/todos?size=1000000")
     }
 
     _getPagedEntries(url) {
@@ -150,7 +155,7 @@ class TodoPage extends Component {
 
     _onClickDelete(resourceId) {
         console.log(resourceId);
-        this._deleteEntry(resourceId, "/v1/todo/" + resourceId);
+        this._deleteEntry(resourceId, BACKEND_URL + "/todo/" + resourceId);
     }
 
     /**
@@ -160,7 +165,7 @@ class TodoPage extends Component {
      * @private
      */
     _checkForSync(lastSync) {
-        if(moment().isSameOrAfter(moment(lastSync).add(30, 's'))) {
+        if (moment().isSameOrAfter(moment(lastSync).add(30, 's'))) {
             return true;
         }
         return false;
@@ -174,7 +179,8 @@ class TodoPage extends Component {
         if (renderAll) {
             return (
                 <div>
-                    <CloseableAlert visible={this.state.showAlert} alertType="info" title="Synchronize!" text="Getting Todos remotely."/>
+                    <CloseableAlert visible={this.state.showAlert} alertType="info" title="Synchronize!"
+                                    text="Getting Todos remotely."/>
                     <b>Last Synch: {lastSynch} </b>
                     <TodoStoragePanel/>
                     <CompleteTodoList

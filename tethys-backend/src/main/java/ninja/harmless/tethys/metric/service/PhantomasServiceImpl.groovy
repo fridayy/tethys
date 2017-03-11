@@ -31,8 +31,11 @@ class PhantomasServiceImpl implements PhantomasService {
     private Object parseCommand(String url) {
         JsonSlurper jsonSlurper = new JsonSlurper()
         def res
+
+        String phantomasModules = environment.getProperty("tethys.phantomas.modules")
+
         try {
-            res = jsonSlurper.parseText("phantomas $url -R json:pretty --verbose".execute().text)
+            res = jsonSlurper.parseText("phantomas $url --modules=$phantomasModules -R json:pretty --verbose".execute().text)
         } catch (IOException e) {
             throw new IllegalStateException("Could not call phantomas (not installed?)", e)
         }
@@ -43,8 +46,8 @@ class PhantomasServiceImpl implements PhantomasService {
     private boolean isApplicableUrl(String url) {
         String canonicalUrl = getUrl(url)
         boolean isValid = canonicalUrl.equalsIgnoreCase(getUrl(environment.getProperty("tethys.frontend.reactDevUrl"))) ||
-                canonicalUrl.equalsIgnoreCase(getUrl(environment.getProperty("tethys.frontend.reactUrl")))
-                canonicalUrl.equalsIgnoreCase(getUrl(environment.getProperty("tethys.frontend.angularDevUrl")))
+                canonicalUrl.equalsIgnoreCase(getUrl(environment.getProperty("tethys.frontend.reactUrl"))) ||
+                canonicalUrl.equalsIgnoreCase(getUrl(environment.getProperty("tethys.frontend.angularDevUrl"))) ||
                 canonicalUrl.equalsIgnoreCase(getUrl(environment.getProperty("tethys.frontend.angularUrl")))
         return isValid
     }

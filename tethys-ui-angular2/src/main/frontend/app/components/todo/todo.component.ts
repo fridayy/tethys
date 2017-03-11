@@ -1,23 +1,23 @@
 import { Component, OnInit } from '@angular/core';
 import {TodoResource} from "./todoResource";
-import {TodoProviderService} from "./todo-provider.service";
+import {TodoProviderService} from "../../services/todo-provider.service";
 import {PagedTodoResource, PagedTodoResourceImpl} from "./pagedTodoResource";
 import {PageMetadata} from "./pageMetadata";
 
 
 @Component({
   selector: 'app-todo',
-  templateUrl: './todo.component.html',
-  styleUrls: ['./todo.component.css'],
+  templateUrl: 'todo.component.html',
+  styleUrls: ['todo.component.css'],
   providers: [TodoProviderService] // Register the service
 })
 export class TodoComponent implements OnInit {
-  title: string = 'Todos';
-  todoItems: TodoResource[];
-  pagedTodoResources: PagedTodoResource = new PagedTodoResourceImpl(null, null);
-  pageMetadata: PageMetadata = new PageMetadata(0,0,0,0);
-  pages: number[] = [];
-  showAll: boolean = false;
+  private title: string = 'Todos';
+  private todoItems: TodoResource[];
+  private pagedTodoResources: PagedTodoResource = new PagedTodoResourceImpl(null, null);
+  private pageMetadata: PageMetadata = new PageMetadata(0,0,0,0);
+  private pages: number[] = [];
+  private showAll: boolean = false;
 
   constructor(private todoProviderService: TodoProviderService) { }
 
