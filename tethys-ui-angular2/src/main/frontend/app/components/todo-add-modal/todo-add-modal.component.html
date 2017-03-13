@@ -1,0 +1,12 @@
+<button md-raised-button (click)="openForm()">Add</button>
+<div *ngIf="open">
+<form #f="ngForm" (ngSubmit)="onSubmit(f.value)">
+  <md-input-container>
+    <input mdInput placeholder="Title" value="" name="title" ngModel>
+  </md-input-container>
+  <md-input-container>
+    <input mdInput placeholder="Description" value="" name="description" ngModel>
+  </md-input-container>
+  <button type="submit" md-raised-button>Add</button>
+</form>
+</div>

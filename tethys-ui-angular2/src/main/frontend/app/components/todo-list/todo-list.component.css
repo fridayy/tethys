@@ -1,0 +1,15 @@
+.pagination {
+  margin-left: 25%;
+}
+
+.todo-item {
+  margin-top: 4%;
+}
+
+.card-content {
+  padding-left: 1.5%;
+}
+
+md-chip {
+  max-width: 200px;
+}

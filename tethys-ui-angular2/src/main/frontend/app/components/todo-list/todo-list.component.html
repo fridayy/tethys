@@ -1,0 +1,18 @@
+<div class="center-block">
+<md-card class="todo-item" *ngFor="let item of todoResources.todoResources">
+  <md-card-header>
+    <md-card-title><b>{{item.title}}</b></md-card-title>
+    <md-card-subtitle>Created: {{item.createdAt}} | id: {{item.resourceId}}</md-card-subtitle>
+  </md-card-header>
+  <md-card-content>
+    <p class="card-content">
+      {{item.description}}
+    </p>
+  </md-card-content>
+  <md-card-actions>
+    <button *ngIf="!item.markedDone" (click)="updateStatusEvent(item)" type="button" class="btn btn-danger">In Progress</button>
+    <button *ngIf="item.markedDone" (click)="updateStatusEvent(item)" type="button" class="btn btn-success">Done</button>
+    <button (click)="deleteEvent(item)" md-button><span aria-hidden="true">&times;</span></button>
+  </md-card-actions>
+</md-card>
+</div>
