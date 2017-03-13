@@ -12,6 +12,7 @@ import ninja.harmless.tethys.todo.repository.TodoRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
+import org.springframework.data.domain.Sort
 import org.springframework.data.rest.webmvc.ResourceNotFoundException
 import org.springframework.stereotype.Component
 /**
@@ -42,6 +43,7 @@ class TodoResourceServiceImpl implements TodoResourceService {
         if(repository.findByTitle(todo.title) != null) {
             throw new DuplicatedResourceException("wrong HTTP method. Use PUT.")
         } else {
+            todo.resourceId = UUID.randomUUID().toString();
             repository.save(todo)
         }
         return todoResourceAssembler.toResource(todo)
@@ -63,7 +65,7 @@ class TodoResourceServiceImpl implements TodoResourceService {
     CustomPagedResources<TodoResource> get(int page, int size) {
         Assert.notNull(page, "Page must not be null.")
         Assert.notNull(size, "Limit must not be null.")
-        Page<Todo> todoPage = repository.findAll(new PageRequest(page, size))
+        Page<Todo> todoPage = repository.findAll(new PageRequest(page, size, Sort.Direction.DESC, "createdAt"))
 
         return customPagedResourceAssembler.toResource(todoPage, todoResourceAssembler)
     }

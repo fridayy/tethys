@@ -17,5 +17,9 @@ export class TodoResourceImpl implements TodoResource {
   todoResources: TodoItem[];
   _links: LinkItem;
   accessed: AccessedItem;
-  page: PageMetadata;
+  page: PageMetadata = {} as any;
+
+
+  constructor() {
+  }
 }

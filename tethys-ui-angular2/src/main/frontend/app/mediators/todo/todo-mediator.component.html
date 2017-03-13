@@ -1,2 +1,20 @@
-<app-todo (pageMetaDataEvent)="pageMetaDataEventHandler($event)"></app-todo>
+<h2>
+  {{title}}
+</h2>
 <app-todo-list-metadata [pageMetadata]="pageMetadata"></app-todo-list-metadata>
+<app-todo-pagination
+  [pageMetadata]="pageMetadata"
+  (next)="nextEventHandler($event)"
+  (previous)="previousEventHandler($event)"
+  (showAll)="showAllEventHandler($event)"
+  (showLess)="showLessEventHandler($event)"></app-todo-pagination>
+<app-todo-add-modal (todoItem)="addEventHandler($event)"></app-todo-add-modal>
+<app-todo [todoResources]="todoResources" (delete)="deleteEventHandler($event)" (update)="updateEventHandler($event)"></app-todo>
+<app-todo-list-metadata [pageMetadata]="pageMetadata"></app-todo-list-metadata>
+<app-todo-pagination
+  [pageMetadata]="pageMetadata"
+  (next)="nextEventHandler($event)"
+  (previous)="previousEventHandler($event)"
+  (showAll)="showAllEventHandler($event)"
+  (showLess)="showLessEventHandler($event)"></app-todo-pagination>
+<app-todo-add-modal (todoItem)="addEventHandler($event)"></app-todo-add-modal>

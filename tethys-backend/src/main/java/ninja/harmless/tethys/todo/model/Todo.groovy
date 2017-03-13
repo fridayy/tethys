@@ -25,7 +25,6 @@ class Todo extends BaseEntity {
         this.markedDone = markedDone
         this.createdAt = createdAt
     }
-
     @Transient
     String resourceId
 

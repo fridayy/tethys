@@ -1,5 +1,9 @@
-<ul class="nav nav-tabs">
-  <li *ngFor="let item of navigationItems" role="presentation" class="{{item.getClass()}}">
-    <a [routerLink]="[item.link]" (click)="changeActive(item)">{{item.label}}</a>
-  </li>
-</ul>
+<nav md-tab-nav-bar>
+  <a md-tab-link
+     *ngFor="let item of navigationItems"
+     [routerLink]="item.link"
+     routerLinkActive #rla="routerLinkActive"
+     [active]="rla.isActive">
+    {{item.label}}
+  </a>
+</nav>

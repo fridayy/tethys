@@ -1,6 +1,6 @@
 import {Routes, RouterModule} from "@angular/router";
 import {HomeComponent} from "./components/home/home.component";
-import {TodoComponent} from "./components/todo-list/todo.component";
+import {TodoComponent} from "./components/todo-list/todo-list.component";
 import {ErrorComponent} from "./components/error/error.component";
 import {MetricComponent} from "./components/metric/metric.component";
 import {TodoMediator} from "./mediators/todo/todo-mediator.component";

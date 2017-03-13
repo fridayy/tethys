@@ -3,7 +3,7 @@ import {NgModule} from "@angular/core";
 import {FormsModule} from "@angular/forms";
 import {HttpModule} from "@angular/http";
 import {AppComponent} from "./app.component";
-import {TodoComponent} from "./components/todo-list/todo.component";
+import {TodoComponent} from "./components/todo-list/todo-list.component";
 import {HeaderComponent} from "./components/header/header.component";
 import {NavigationComponent} from "./components/navigation/navigation.component";
 import {SimpleComponent} from "./components/di-test/simple.component";
@@ -13,8 +13,10 @@ import {HomeComponent} from "./components/home/home.component";
 import {ErrorComponent} from "./components/error/error.component";
 import {MetricComponent} from "./components/metric/metric.component";
 import {TodoMediator} from "./mediators/todo/todo-mediator.component";
-import { ListComponent } from './components/list/list.component';
 import { TodoListMetadataComponent } from './components/todo-list-metadata/todo-list-metadata.component';
+import { TodoPaginationComponent } from './components/todo-pagination/todo-pagination.component';
+import {MaterialModule} from "@angular/material";
+import { TodoAddModalComponent } from './components/todo-add-modal/todo-add-modal.component';
 /**
  * app.module.ts
  * Angular2 modules help us organizes our application into cohesive blocḱs of functionality and provide boundaries
@@ -35,12 +37,15 @@ import { TodoListMetadataComponent } from './components/todo-list-metadata/todo-
     SimpleComponent,
     ErrorComponent,
     TodoListMetadataComponent,
-    TodoMediator
+    TodoMediator,
+    TodoPaginationComponent,
+    TodoAddModalComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
+    MaterialModule,
     routing
   ],
   providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}],
