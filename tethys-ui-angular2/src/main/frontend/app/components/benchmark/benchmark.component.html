@@ -1,0 +1,10 @@
+<h2>{{title}}</h2>
+<form #f="ngForm" (ngSubmit)="onSubmit(f.value)">
+  <md-input-container>
+    <input mdInput placeholder="count" value="1000" name="count" ngModel>
+  </md-input-container>
+  <button type="submit" md-raised-button>Start Benchmark</button>
+</form>
+<button (click)="onDelete()" md-raised-button>Clear All</button>
+<button (click)="onUpdate()" md-raised-button>Update</button>
+<app-benchmark-table [data]="data"></app-benchmark-table>

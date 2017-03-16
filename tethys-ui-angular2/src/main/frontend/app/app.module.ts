@@ -17,6 +17,8 @@ import { TodoListMetadataComponent } from './components/todo-list-metadata/todo-
 import { TodoPaginationComponent } from './components/todo-pagination/todo-pagination.component';
 import {MaterialModule} from "@angular/material";
 import { TodoAddModalComponent } from './components/todo-add-modal/todo-add-modal.component';
+import { BenchmarkComponent } from './components/benchmark/benchmark.component';
+import {BenchmarkTableComponent} from "./components/benchmark-table/benchmark-table.component";
 /**
  * app.module.ts
  * Angular2 modules help us organizes our application into cohesive blocḱs of functionality and provide boundaries
@@ -39,7 +41,9 @@ import { TodoAddModalComponent } from './components/todo-add-modal/todo-add-moda
     TodoListMetadataComponent,
     TodoMediator,
     TodoPaginationComponent,
-    TodoAddModalComponent
+    TodoAddModalComponent,
+    BenchmarkComponent,
+    BenchmarkTableComponent
   ],
   imports: [
     BrowserModule,
