@@ -5,8 +5,8 @@ table, th , td {
     width: 100%;
 }
 table tr:nth-child(odd) {
-    background-color: greenyellow;
+    background-color: #aaeaa4;
 }
 table tr:nth-child(even) {
-    background-color: white;
+    background-color: whitesmoke;
 }
