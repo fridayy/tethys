@@ -13,12 +13,17 @@ import {HomeComponent} from "./components/home/home.component";
 import {ErrorComponent} from "./components/error/error.component";
 import {MetricComponent} from "./components/metric/metric.component";
 import {TodoMediator} from "./mediators/todo/todo-mediator.component";
-import { TodoListMetadataComponent } from './components/todo-list-metadata/todo-list-metadata.component';
-import { TodoPaginationComponent } from './components/todo-pagination/todo-pagination.component';
+import {TodoListMetadataComponent} from './components/todo-list-metadata/todo-list-metadata.component';
+import {TodoPaginationComponent} from './components/todo-pagination/todo-pagination.component';
 import {MaterialModule} from "@angular/material";
-import { TodoAddModalComponent } from './components/todo-add-modal/todo-add-modal.component';
-import { BenchmarkComponent } from './components/benchmark/benchmark.component';
+import {TodoAddModalComponent} from './components/todo-add-modal/todo-add-modal.component';
+import {BenchmarkComponent} from './components/benchmark/benchmark.component';
 import {BenchmarkTableComponent} from "./components/benchmark-table/benchmark-table.component";
+import {HelloWorldComponent} from "./components/hello-world/hello-world.component";
+import {UpperCaseDirective} from "./directives/uppercase.directive";
+import {NotificationComponent} from "./components/notification/notification.component";
+import { BenchmarkTableRowComponent } from './components/benchmark-table-row/benchmark-table-row.component';
+
 /**
  * app.module.ts
  * Angular2 modules help us organizes our application into cohesive blocḱs of functionality and provide boundaries
@@ -43,7 +48,11 @@ import {BenchmarkTableComponent} from "./components/benchmark-table/benchmark-ta
     TodoPaginationComponent,
     TodoAddModalComponent,
     BenchmarkComponent,
-    BenchmarkTableComponent
+    BenchmarkTableComponent,
+    HelloWorldComponent,
+    UpperCaseDirective,
+    NotificationComponent,
+    BenchmarkTableRowComponent
   ],
   imports: [
     BrowserModule,

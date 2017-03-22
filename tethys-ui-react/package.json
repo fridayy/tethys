@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "bootstrap": "^3.3.7",
+    "chai": "^3.5.0",
     "chart.js": "^2.5.0",
     "localforage": "^1.4.3",
     "moment": "^2.17.1",

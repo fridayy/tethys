@@ -19,11 +19,11 @@ export class DataStore {
     return data;
   }
 
-  update(num) {
-    let add = this.data.length + num;
-    for(let i = this.data.length; i < add; i++) {
-      this.data.push({id : i, label : "Updated"});
+  update() {
+    for(let i = 0; i < this.data.length; i++) {
+      this.data[i] = {id : i, label: "Updated"}
     }
+    return this.data;
   }
 
   remove() {

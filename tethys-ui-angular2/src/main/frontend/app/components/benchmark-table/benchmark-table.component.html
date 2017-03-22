@@ -1,12 +1,9 @@
 <div>
   <p>Total Rows: {{_data.length}}</p>
-  <table class="table table-bordered">
+  <table>
     <tbody>
-    <tr *ngFor="let i of _data">
-      <td>{{i.id}}</td>
-      <td>{{i.label}}</td>
-      <td>{{i.label}}</td>
-      <td>{{i.label}}</td>
+    <tr class="active" *ngFor="let element of _data">
+      <app-benchmark-table-row [dataElement]="element"></app-benchmark-table-row>
     </tr>
     </tbody>
   </table>

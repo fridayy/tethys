@@ -1,10 +1,12 @@
-table
-{
+table, th , td {
+    border: 1px solid grey;
     border-collapse: collapse;
-    border-spacing: 0px;
-}
-table, th, td
-{
     padding: 5px;
-    border: 1px solid black;
+    width: 100%;
+}
+table tr:nth-child(odd) {
+    background-color: greenyellow;
+}
+table tr:nth-child(even) {
+    background-color: white;
 }

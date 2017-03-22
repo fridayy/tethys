@@ -68,7 +68,7 @@ class BenchmarkPage extends Component {
             <Button onClick={this.updateTables}>Update</Button>
             <Button onClick={this.clearAll}>Clear</Button>
             <p>Total Rows: {this.state.store.data.length}</p>
-            <table className="table table-bordered">
+            <table>
                 <tbody>{row}</tbody>
             </table>
         </div>)

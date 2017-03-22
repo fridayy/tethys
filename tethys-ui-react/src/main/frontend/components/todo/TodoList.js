@@ -22,7 +22,7 @@ const TodoList = (props) => {
                 {props.todos.map(createEntryRow, this)}
             </div>
         )
-}
+};
 
 TodoList.propTypes = {
     todos: PropTypes.array.isRequired,

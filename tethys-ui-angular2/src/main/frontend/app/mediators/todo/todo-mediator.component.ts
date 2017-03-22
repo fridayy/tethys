@@ -23,12 +23,15 @@ export class TodoMediator implements OnInit {
   private todoResources: TodoResource;
   private linkMetadata: LinkItem;
 
+  private notificationMessage: string;
+
+
   private allTodosUrl:string = 'http://localhost:8000/v1/todos?page=0&size=10000000';
   private url:string = 'http://localhost:8000/v1/todos';
   private todoUrl:string = 'http://localhost:8000/v1/todo';
 
 
-  constructor(private todoProviderService: TodoProviderService, public snackBar: MdSnackBar, public dialog: MdDialog) { }
+  constructor(private todoProviderService: TodoProviderService, public snackBar: MdSnackBar) { }
 
   ngOnInit(): void {
     this.assemble(this.url);
@@ -55,9 +58,7 @@ export class TodoMediator implements OnInit {
     this.todoResources.todoResources.splice(this.todoResources.todoResources.indexOf(item), 1);
     this.pageMetadata.totalElements = this.pageMetadata.totalElements -1;
 
-    this.snackBar.open(`Deleted: ${item.title}!`, "Close", {
-      duration: 2000,
-    });
+    this.notificationMessage = `Deleted: ${item.title}!`
   }
 
 

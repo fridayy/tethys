@@ -37,7 +37,6 @@ export class BenchmarkTableComponent implements OnChanges, AfterViewChecked {
   }
 
   @Input() set data(value: Array<any>) {
-    console.log(value);
     this._data = value;
     this.watch = new Stopwatch("Stopwatch");
     this.watch.start();

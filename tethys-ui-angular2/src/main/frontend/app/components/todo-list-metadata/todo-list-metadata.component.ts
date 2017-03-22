@@ -7,14 +7,12 @@ import {PageMetadata} from "../../models/pageMetadata";
   templateUrl: 'todo-list-metadata.component.html',
   styleUrls: ['todo-list-metadata.component.css']
 })
-export class TodoListMetadataComponent implements OnInit {
+export class TodoListMetadataComponent {
 
   private _pageMetadata: PageMetadata;
 
   constructor() { }
 
-  ngOnInit() {
-  }
 
   @Input() set pageMetadata(pageMetadata: PageMetadata) {
     this._pageMetadata = pageMetadata;

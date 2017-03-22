@@ -8,15 +8,12 @@ import {TodoItemImpl} from "../../models/impl/todoItemImpl";
   templateUrl: 'todo-add-modal.component.html',
   styleUrls: ['todo-add-modal.component.css']
 })
-export class TodoAddModalComponent implements OnInit {
+export class TodoAddModalComponent {
 
   @Output() todoItem: EventEmitter<TodoItem> = new EventEmitter();
   private open: boolean = false;
 
   constructor() { }
-
-  ngOnInit() {
-  }
 
   onSubmit(form: any) {
     let item: TodoItem = new TodoItemImpl();

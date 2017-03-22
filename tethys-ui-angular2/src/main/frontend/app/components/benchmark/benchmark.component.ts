@@ -44,8 +44,7 @@ export class BenchmarkComponent implements OnInit {
   }
 
   onUpdate(): void {
-    this.dataStore.update(100);
-    let data = this.dataStore.getData();
-    this.data = Array.of(data)[0];
+    this.data = this.dataStore.update();
+    this.data = Array.of(this.data)[0];
   }
 }
