@@ -7,8 +7,13 @@ describe('tethys-ui-angular2 App', function() {
     page = new TethysUiAngular2Page();
   });
 
-  it('should display message saying app works', () => {
+  it('navigation is present', () => {
     page.navigateTo();
-    expect(page.getParagraphText()).toEqual('app works!');
+    expect(page.getNavigation().isDisplayed()).toEqual(true);
+  });
+
+  it('navigating to todo page by clicking shows correct page', () => {
+    page.getTodosPageLink().click();
+    expect(page.getTodoPageTitle()).toBe("Todos")
   });
 });

@@ -1,9 +1,9 @@
 /* tslint:disable:no-unused-variable */
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {By} from '@angular/platform-browser';
+import {DebugElement, EventEmitter} from '@angular/core';
 
-import { TodoComponent } from './todo-list.component';
+import {TodoComponent} from './todo-list.component';
 import {MaterialModule} from "@angular/material";
 import {TodoResource} from "../../models/todoResource";
 import {TodoItem} from "../../models/todoItem";
@@ -14,19 +14,22 @@ import {PageMetadata} from "../../models/pageMetadata";
 describe('TodoComponent', () => {
   let component: TodoComponent;
   let fixture: ComponentFixture<TodoComponent>;
+  let eventEmitter: EventEmitter<any>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [MaterialModule.forRoot()],
-      declarations: [ TodoComponent ]
+      declarations: [TodoComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(TodoComponent);
     component = fixture.componentInstance;
     component.todoResources = new MockedTodoResource("1");
+    eventEmitter = new EventEmitter();
+    component.delete = eventEmitter;
     fixture.detectChanges();
   });
 
@@ -35,16 +38,26 @@ describe('TodoComponent', () => {
     expect(component.todoResources["mockedId"]).toBe("1");
   });
 
-
   it('todo resource can be set', () => {
     expect(component.todoResources).not.toBeUndefined();
+  });
+
+  it('display correct information', () => {
+    let element = fixture.nativeElement;
+    fixture.detectChanges();
+    expect(element.querySelector('.card-content').innerText).toBe("mockedDescription")
   });
 });
 
 
-
 class MockedTodoResource implements TodoResource {
-  todoResources: TodoItem[] = [];
+  todoResources: TodoItem[] = [{
+    resourceId: "1",
+    title: "1",
+    description: "mockedDescription",
+    markedDone: true,
+    createdAt: "2",
+  }];
   _links: LinkItem = {} as LinkItem;
   accessed: AccessedItem = {} as AccessedItem;
   page: PageMetadata = {} as PageMetadata;

@@ -5,7 +5,16 @@ export class TethysUiAngular2Page {
     return browser.get('/');
   }
 
-  getParagraphText() {
-    return element(by.css('app-root h1')).getText();
+  getNavigation() {
+    return element(by.css('.mat-tab-links'));
   }
+
+  getTodosPageLink() {
+    return element(by.linkText("Todos"));
+  }
+
+  getTodoPageTitle() {
+    return element(by.css('h2')).getText();
+  }
+
 }
