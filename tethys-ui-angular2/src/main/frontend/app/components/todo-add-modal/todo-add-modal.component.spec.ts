@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TodoAddModalComponent } from './todo-add-modal.component';
+import {FormsModule} from "@angular/forms";
+import {MaterialModule} from "@angular/material";
 
 describe('TodoAddModalComponent', () => {
   let component: TodoAddModalComponent;
@@ -8,6 +10,7 @@ describe('TodoAddModalComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [FormsModule, MaterialModule.forRoot()],
       declarations: [ TodoAddModalComponent ]
     })
     .compileComponents();

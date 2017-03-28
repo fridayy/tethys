@@ -8,16 +8,14 @@ import {NavigationItem} from "./navigationItem";
 })
 export class NavigationComponent implements OnInit {
 
-  private navigationItems: NavigationItem[] = [];
+  private _navigationItems: NavigationItem[] = [];
 
-  constructor() {
-  }
 
   private initNavigationList(): void {
-    this.navigationItems.push(new NavigationItem("Home", "/", true));
-    this.navigationItems.push(new NavigationItem("Todos", "/todos", false));
-    this.navigationItems.push(new NavigationItem("Benchmark", "/benchmark", false));
-    this.navigationItems.push(new NavigationItem("Metrics", "/metrics", false));
+    this._navigationItems.push(new NavigationItem("Home", "/", true));
+    this._navigationItems.push(new NavigationItem("Todos", "/todos", false));
+    this._navigationItems.push(new NavigationItem("Benchmark", "/benchmark", false));
+    this._navigationItems.push(new NavigationItem("Metrics", "/metrics", false));
   }
 
   ngOnInit() {
@@ -31,11 +29,19 @@ export class NavigationComponent implements OnInit {
    * @param item NavigationItem
    */
   changeActive(item: NavigationItem): void {
-    let activeItem: NavigationItem = this.navigationItems.find((item) => {
+    let activeItem: NavigationItem = this._navigationItems.find((item) => {
       return item.isActive;
     });
     activeItem.setActive();
     item.setActive();
   }
 
+
+  get navigationItems(): NavigationItem[] {
+    return this._navigationItems;
+  }
+
+  set navigationItems(value: NavigationItem[]) {
+    this._navigationItems = value;
+  }
 }

@@ -46,7 +46,7 @@ class TodoPage extends Component {
         if (nextProps.route.renderAll) {
             this._getAllEntries();
         } else {
-            this._getPagedEntries(this.state.page.number, "/v1/todos");
+            this._getPagedEntries(BACKEND_URL + "/todos");
         }
     }
 
@@ -63,11 +63,7 @@ class TodoPage extends Component {
     _get(url) {
         return fetch(url, {
             method: "GET"
-        }).then(response => response.json())
-            .then(data => {
-                return data
-            })
-            .catch(err => console.log(err));
+        }).catch(err => console.log(err));
     }
 
     // Deletes a given resource
@@ -87,29 +83,38 @@ class TodoPage extends Component {
 
     _getEntries(fallBackURL) {
         let todos = [];
-
-        localForage.getItem("lastSync").then(result => {
-            this.setState({lastSynched: result})
-        });
-
-        localForage.length().then(numberOfKeys => {
-            if (numberOfKeys === 0 || this._checkForSync(this.state.lastSynched)) {
-                this.setState({showAlert: true});
-                this._getEntriesRemotely(this._get(fallBackURL));
-            }
-        });
-        localForage.iterate((value, key, iterationNumber) => {
-            todos.push(value);
-        }).then(() => {
-            this.setState({
-                todos: todos,
-                lastSynched: this.state.lastSynched
+        if(this.state.renderAll) {
+            localForage.getItem("lastSync").then(result => {
+                this.setState({lastSynched: result})
             });
-        });
+
+            localForage.length().then(numberOfKeys => {
+                if (numberOfKeys === 0 || this._checkForSync(this.state.lastSynched)) {
+                    this.setState({showAlert: true});
+                    this._get(fallBackURL).then(data => {
+                        this._getEntriesRemotely(data.json());
+                    })
+                }
+            });
+            localForage.iterate((value, key, iterationNumber) => {
+                todos.push(value);
+            }).then(() => {
+                this.setState({
+                    todos: todos,
+                    lastSynched: this.state.lastSynched
+                });
+            });
+        } else {
+            this._get(fallBackURL).then(data => {
+                this._getEntriesRemotely(data.json());
+            });
+        }
+
     }
 
     _getEntriesRemotely(data) {
         data.then(d => {
+            console.log(d);
                 this.setState({
                     todos: d._embedded.todoResources,
                     page: d.page,
@@ -138,19 +143,24 @@ class TodoPage extends Component {
     }
 
     _getPagedEntries(url) {
-        this._getEntriesRemotely(this._get(url));
+        this._getEntries(url)
     }
 
     _getNextPage() {
         let url = this.state.links.next.href;
+        console.log(url)
         url = url.split("8000/")[1];
-        this._getPagedEntries(url);
+        this._get(url).then(data => {
+            this._getEntriesRemotely(data.json());
+        });
     }
 
     _getPreviousPage() {
         let url = this.state.links.prev.href;
         url = url.split("8000/")[1];
-        this._getPagedEntries(url);
+        this._get(url).then(data => {
+            this._getEntriesRemotely(data.json());
+        });
     }
 
     _onClickDelete(resourceId) {

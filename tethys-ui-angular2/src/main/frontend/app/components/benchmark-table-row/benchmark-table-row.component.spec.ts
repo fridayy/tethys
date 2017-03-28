@@ -16,6 +16,7 @@ describe('BenchmarkTableRowComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(BenchmarkTableRowComponent);
     component = fixture.componentInstance;
+    component.dataElement = new MockedDataElement(0, "mock");
     fixture.detectChanges();
   });
 
@@ -23,3 +24,14 @@ describe('BenchmarkTableRowComponent', () => {
     expect(component).toBeTruthy();
   });
 });
+
+class MockedDataElement {
+  id: number;
+  label: string;
+
+
+  constructor(id: number, label: string) {
+    this.id = id;
+    this.label = label;
+  }
+}
