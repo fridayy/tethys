@@ -21,7 +21,11 @@
         "../../../node_modules/bootstrap/dist/css/bootstrap.min.css",
         "../../../node_modules/font-awesome/css/font-awesome.min.css"
       ],
-      "scripts": [],
+      "scripts": [
+        "../../../node_modules/sw-toolbox/companion.js",
+        "../../../node_modules/sw-toolbox/sw-toolbox.js",
+        "todo-service-worker.js"
+      ],
       "environmentSource": "environments/environment.ts",
       "environments": {
         "source": "environments/environment.ts",

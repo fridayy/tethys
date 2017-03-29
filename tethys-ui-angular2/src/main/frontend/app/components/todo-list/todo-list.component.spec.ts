@@ -35,14 +35,14 @@ describe('TodoComponent', () => {
 
   it('should be initialized correctly', () => {
     expect(component).toBeTruthy();
-    expect(component.todoResources["mockedId"]).toBe("1");
+    expect(component.todoResources["mockId"]).toBe("1");
   });
 
   it('todo resource can be set', () => {
     expect(component.todoResources).not.toBeUndefined();
   });
 
-  it('display correct information', () => {
+  it('displays correct information', () => {
     let element = fixture.nativeElement;
     fixture.detectChanges();
     expect(element.querySelector('.card-content').innerText).toBe("mockedDescription")
@@ -53,19 +53,19 @@ describe('TodoComponent', () => {
 class MockedTodoResource implements TodoResource {
   todoResources: TodoItem[] = [{
     resourceId: "1",
-    title: "1",
+    title: "mockedTitle",
     description: "mockedDescription",
     markedDone: true,
-    createdAt: "2",
+    createdAt: "_",
   }];
   _links: LinkItem = {} as LinkItem;
   accessed: AccessedItem = {} as AccessedItem;
   page: PageMetadata = {} as PageMetadata;
 
-  mockedId: string;
+  mockId: string;
 
 
   constructor(mockedId: string) {
-    this.mockedId = mockedId;
+    this.mockId = mockedId;
   }
 }
