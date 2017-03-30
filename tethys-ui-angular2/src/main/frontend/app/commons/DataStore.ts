@@ -37,6 +37,7 @@ export class DataStore {
   run(count = 1000) {
     this.count = count;
     this.data = this.build(count);
+    console.log(this.data)
   }
 
   getData(): Array<any> {
