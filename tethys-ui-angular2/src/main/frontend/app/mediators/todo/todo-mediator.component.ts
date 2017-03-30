@@ -76,7 +76,7 @@ export class TodoMediator implements OnInit {
   addEventHandler(item: TodoItem) {
     let newItem:TodoItem = this.todoProviderService.addTodo(this.todoUrl, item);
     this.todoResources.todoResources.push(newItem);
-    this.snackBar.open(`Added: ${newItem.title}!`, "Close", {
+    this.snackBar.open(`Added: ${item.title}!`, "Close", {
       duration: 2000,
     });
   }

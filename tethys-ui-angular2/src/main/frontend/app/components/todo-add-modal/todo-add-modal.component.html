@@ -1,12 +1,16 @@
-<button md-raised-button (click)="openForm()">Add</button>
+<button md-raised-button (click)="openForm()">New Task</button>
 <div *ngIf="open">
+  <md-card>
 <form #f="ngForm" (ngSubmit)="onSubmit(f.value)">
   <md-input-container>
-    <input mdInput placeholder="Title" value="" name="title" ngModel>
+    <input mdInput placeholder="Title" value="" name="title" ngModel required>
   </md-input-container>
+  <br>
   <md-input-container>
-    <input mdInput placeholder="Description" value="" name="description" ngModel>
+    <input mdInput placeholder="Description" value="" name="description" ngModel required>
   </md-input-container>
-  <button type="submit" md-raised-button>Add</button>
+  <br>
+  <button type="submit" md-raised-button>Add Item</button>
 </form>
+  </md-card>
 </div>

@@ -27,7 +27,7 @@ export class TodoComponent {
   }
 
   updateStatusEvent(event: TodoItem) {
-    event.markedDone = true;
+    event.markedDone = !event.markedDone;
     this.update.emit(event);
   }
 }
