@@ -9,7 +9,7 @@
   (showAll)="showAllEventHandler($event)"
   (showLess)="showLessEventHandler($event)"></app-todo-pagination>
 <app-todo-add-modal (todoItem)="addEventHandler($event)"></app-todo-add-modal>
-<app-notification [message]="notificationMessage"></app-notification>
+<app-notification [notificationMessage]="notificationMessage"></app-notification>
 <app-todo [todoResources]="todoResources" (delete)="deleteEventHandler($event)" (update)="updateEventHandler($event)"></app-todo>
 <app-todo-list-metadata [pageMetadata]="pageMetadata"></app-todo-list-metadata>
 <app-todo-pagination

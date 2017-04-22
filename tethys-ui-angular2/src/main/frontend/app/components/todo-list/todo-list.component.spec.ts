@@ -3,7 +3,7 @@ import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {By} from '@angular/platform-browser';
 import {DebugElement, EventEmitter} from '@angular/core';
 
-import {TodoComponent} from './todo-list.component';
+import {TodoListComponent} from './todo-list.component';
 import {MaterialModule} from "@angular/material";
 import {TodoResource} from "../../models/todoResource";
 import {TodoItem} from "../../models/todoItem";
@@ -11,21 +11,21 @@ import {LinkItem} from "../../models/linkItem";
 import {AccessedItem} from "../../models/accessedItem";
 import {PageMetadata} from "../../models/pageMetadata";
 
-describe('TodoComponent', () => {
-  let component: TodoComponent;
-  let fixture: ComponentFixture<TodoComponent>;
+describe('TodoListComponent', () => {
+  let component: TodoListComponent;
+  let fixture: ComponentFixture<TodoListComponent>;
   let eventEmitter: EventEmitter<any>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [MaterialModule.forRoot()],
-      declarations: [TodoComponent]
+      declarations: [TodoListComponent]
     })
       .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TodoComponent);
+    fixture = TestBed.createComponent(TodoListComponent);
     component = fixture.componentInstance;
     component.todoResources = new MockedTodoResource("1");
     eventEmitter = new EventEmitter();

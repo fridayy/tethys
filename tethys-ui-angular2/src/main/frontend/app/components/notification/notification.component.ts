@@ -9,24 +9,24 @@ import {MdSnackBar} from "@angular/material";
 })
 export class NotificationComponent {
 
-  private _message: string;
+  private _notificationMessage: string;
 
   constructor() {
 
   }
 
 
-  get message(): string {
-    return this._message;
+  get notificationMessage(): string {
+    return this._notificationMessage;
   }
 
-  @Input() set message(value: string) {
+  @Input() set notificationMessage(value: string) {
     if (value != undefined) {
-      this._message = value;
+      this._notificationMessage = value;
     }
   }
 
   close() {
-    this._message = undefined;
+    this._notificationMessage = undefined;
   }
 }

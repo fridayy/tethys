@@ -3,7 +3,7 @@ import {NgModule} from "@angular/core";
 import {FormsModule} from "@angular/forms";
 import {HttpModule} from "@angular/http";
 import {AppComponent} from "./app.component";
-import {TodoComponent} from "./components/todo-list/todo-list.component";
+import {TodoListComponent} from "./components/todo-list/todo-list.component";
 import {HeaderComponent} from "./components/header/header.component";
 import {NavigationComponent} from "./components/navigation/navigation.component";
 import {SimpleComponent} from "./components/di-test/simple.component";
@@ -37,7 +37,7 @@ import { BenchmarkTableRowComponent } from './components/benchmark-table-row/ben
   declarations: [
     AppComponent,
     HomeComponent,
-    TodoComponent,
+    TodoListComponent,
     HeaderComponent,
     NavigationComponent,
     MetricComponent,

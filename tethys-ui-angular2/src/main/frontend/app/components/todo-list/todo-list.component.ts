@@ -8,7 +8,7 @@ import {TodoItem} from "../../models/todoItem";
   templateUrl: 'todo-list.component.html',
   styleUrls: ['todo-list.component.css'],
 })
-export class TodoComponent {
+export class TodoListComponent {
   private _todoResources: TodoResource;
 
   @Output() delete: EventEmitter<TodoItem> = new EventEmitter();
