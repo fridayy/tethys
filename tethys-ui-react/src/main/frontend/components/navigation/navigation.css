@@ -2,3 +2,14 @@
     margin-top: 1%;
     margin-bottom: 2%;
 }
+
+a {
+    color: #424242;
+    font-family: 'Montserrat', sans-serif !important;
+}
+
+.fa-angle-double-right {
+    padding-left: 0.5%;
+    padding-right: 0.5%;
+    color: #aaeaa4;
+}

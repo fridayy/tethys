@@ -32,7 +32,7 @@ const TodoItem = (props) => {
     return (
         <Panel header={header} key={props.todo.resourceId} bsStyle={bsStatus} footer={footer}>
             <OverlayTrigger placement="top" overlay={tooltip}>
-                <p className="description">{props.todo.description}</p>
+                <p className="description" onClick={() => props.onClickUpdate(props.todo.resourceId)}>{props.todo.description}</p>
             </OverlayTrigger>
         </Panel>
     )

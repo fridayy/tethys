@@ -13,6 +13,7 @@ import moment from 'moment';
 import TodoStoragePanel from './TodoStoragePanel';
 import CloseableAlert from '../alert/CloseableAlert';
 import {BACKEND_URL} from '../../commons/constants';
+import AddTodoComponent from "../add-todo-component/AddTodoComponent";
 
 class TodoPage extends Component {
 
@@ -34,10 +35,14 @@ class TodoPage extends Component {
         this._getNextPage = this._getNextPage.bind(this);
         this._getPreviousPage = this._getPreviousPage.bind(this);
         this._get = this._get.bind(this);
+        this._post = this._post.bind(this);
         this._getPagedEntries = this._getPagedEntries.bind(this);
         this._getAllEntries = this._getAllEntries.bind(this);
         this._onClickDelete = this._onClickDelete.bind(this);
         this._deleteEntry = this._deleteEntry.bind(this);
+        this._updateEntry = this._updateEntry.bind(this);
+        this._onClickUpdateStatus = this._onClickUpdateStatus.bind(this);
+        this._onClickAdd = this._onClickAdd.bind(this);
     }
 
     // If the renderAll prop changes render the correct version of the page
@@ -73,6 +78,26 @@ class TodoPage extends Component {
         }).catch(err => console.log(err));
     }
 
+    _put(url, body) {
+        var header = new Headers();
+        header.set("Content-Type", "application/json");
+        return fetch(url, {
+            method: "PUT",
+            body: body,
+            headers: header
+        }).catch(err => console.log(err));
+    }
+
+    _post(url, body) {
+        var header = new Headers();
+        header.set("Content-Type", "application/json");
+        return fetch(url, {
+            method: "POST",
+            body: body,
+            headers: header
+        }).catch(err => console.log(err));
+    }
+
     _deleteEntry(key, deleteUrl) {
         localForage.removeItem(key).then(res => {
             this._delete(deleteUrl).then(res => {
@@ -81,9 +106,22 @@ class TodoPage extends Component {
         }).catch(err => console.log(err));
     }
 
+    _updateEntry(key, updateUrl) {
+
+        let item = null;
+
+        localForage.getItem(key).then(res => {
+            res.markedDone = !res.markedDone;
+            this._put(updateUrl, JSON.stringify(res)).then(res => {
+                item = res;
+                this._checkState()
+            })
+        }).catch(err => console.log(err));
+    }
+
     _getEntries(fallBackURL) {
         let todos = [];
-        if(this.state.renderAll) {
+        if (this.state.renderAll) {
             localForage.getItem("lastSync").then(result => {
                 this.setState({lastSynched: result})
             });
@@ -114,7 +152,7 @@ class TodoPage extends Component {
 
     _getEntriesRemotely(data) {
         data.then(d => {
-            console.log(d);
+                console.log(d);
                 this.setState({
                     todos: d._embedded.todoResources,
                     page: d.page,
@@ -148,8 +186,6 @@ class TodoPage extends Component {
 
     _getNextPage() {
         let url = this.state.links.next.href;
-        console.log(url)
-        url = url.split("8000/")[1];
         this._get(url).then(data => {
             this._getEntriesRemotely(data.json());
         });
@@ -157,15 +193,19 @@ class TodoPage extends Component {
 
     _getPreviousPage() {
         let url = this.state.links.prev.href;
-        url = url.split("8000/")[1];
         this._get(url).then(data => {
             this._getEntriesRemotely(data.json());
         });
     }
 
     _onClickDelete(resourceId) {
-        console.log(resourceId);
         this._deleteEntry(resourceId, BACKEND_URL + "/todo/" + resourceId);
+    }
+
+    _onClickAdd(itemData) {
+       this._post(BACKEND_URL + "/todo/", JSON.stringify(itemData)).then(response => {
+           this._checkState();
+       })
     }
 
     /**
@@ -179,6 +219,10 @@ class TodoPage extends Component {
             return true;
         }
         return false;
+    }
+
+    _onClickUpdateStatus(resourceId) {
+        this._updateEntry(resourceId, BACKEND_URL + "/todo")
     }
 
 
@@ -196,6 +240,8 @@ class TodoPage extends Component {
                     <CompleteTodoList
                         todos={this.state.todos}
                         onClickDelete={this._onClickDelete}
+                        onClickUpdate={this._onClickUpdateStatus}
+                        onClickAdd={this._onClickAdd}
                     />
                 </div>
             )
@@ -209,6 +255,8 @@ class TodoPage extends Component {
                         onNext={this._getNextPage}
                         onPrev={this._getPreviousPage}
                         onClickDelete={this._onClickDelete}
+                        onClickUpdate={this._onClickUpdateStatus}
+                        onClickAdd={this._onClickAdd}
                     /></div>)
         }
     }

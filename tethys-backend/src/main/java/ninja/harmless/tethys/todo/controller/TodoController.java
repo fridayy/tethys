@@ -115,7 +115,7 @@ public class TodoController {
      * @param todo
      * @return the updated resource
      */
-    @RequestMapping(value = "/todo", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/todo", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> updateTodoResource(@RequestBody Todo todo) {
         TodoResource todoResource = todoService.update(todo);
         return new ResponseEntity<>(todoResource, HttpStatus.OK);

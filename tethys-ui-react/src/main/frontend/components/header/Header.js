@@ -4,13 +4,14 @@
 import React from 'react';
 import logo from '../../logo.svg'
 import './Header.css';
+import {PageHeader} from 'react-bootstrap';
 
 const Header = () => {
     return (
-        <div className="App-header">
+        <PageHeader>
             <img src={logo} className="App-logo" alt="logo"/>
-            <h2>Tethys ReactJS</h2>
-        </div>
+            Tethys ReactJS
+        </PageHeader>
     );
 };
 export default Header;

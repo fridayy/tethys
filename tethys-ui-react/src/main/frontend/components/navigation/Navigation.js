@@ -9,19 +9,23 @@ import {Link} from 'react-router';
 import './navigation.css';
 
 const Navigation = () => {
-        return (
-            <div className="navigation">
-                <Link to="/">Home</Link>
-                {" | "}
-                <Link to="paged">Todos (Paged)</Link>
-                {" | "}
-                <Link to="all">Todos (All)</Link>
-                {" | "}
-                <Link to="benchmark">Benchmark</Link>
-                {" | "}
-                <Link to="metrics">Metrics</Link>
-            </div>
-        )
+
+    let icon = <i className="fa fa-angle-double-right" aria-hidden="true"></i>
+
+
+    return (
+        <div className="navigation">
+            <Link to="/">Home</Link>
+            {icon}
+            <Link to="paged">Todos (Paged)</Link>
+            {icon}
+            <Link to="all">Todos (All)</Link>
+            {icon}
+            <Link to="benchmark">Benchmark</Link>
+            {icon}
+            <Link to="metrics">Metrics</Link>
+        </div>
+    )
 };
 
 export default Navigation;
