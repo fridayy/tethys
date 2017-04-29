@@ -15,7 +15,7 @@ class MetricPage extends Component {
     }
 
     componentDidMount() {
-        // this._getMetrics();
+        this._getMetrics();
     }
 
     _getMetrics() {
