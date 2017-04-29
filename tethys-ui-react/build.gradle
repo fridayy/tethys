@@ -27,6 +27,8 @@ task copyResources {
         from('build') {
             include 'favicon.ico'
             include 'index.html'
+            include 'bootstrap.min.css'
+            include 'bootstrap-theme.min.css'
         }
         into './src/main/resources/static'
     }

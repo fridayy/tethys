@@ -12,14 +12,14 @@ The main goal of this application is to provide a prototype todo application in 
 * For working metrics [phantomas](https://github.com/macbre/phantomas) must be installed globally.
 
 ## Download and run
-Download the latest release at [Releases](https://github.com/fridayy/tethys/releases)
-Run all jars with ```java -jar ```.
-
-## Run and build Tethys yourself
-
 Tethys can be run with a native [MongoDB](https://www.mongodb.com/) instance (set in application.properties)
 or use the in-memory Fongo.
 
+Download the latest release at [Releases](https://github.com/fridayy/tethys/releases/tag/v0.1.0)
+
+Run all jars with ```java -jar ```. If you want to use the in-memory MongoDB run the backend jar with: ```java -jar [backend].jar --spring.profiles.active=dev```
+
+## Run and build Tethys yourself
 To run Tethys the following steps must be followed:
 
 #### Build
