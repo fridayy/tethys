@@ -12,14 +12,3 @@ export interface TodoResource {
   accessed: AccessedItem;
   page: PageMetadata;
 }
-
-export class TodoResourceImpl implements TodoResource {
-  todoResources: TodoItem[];
-  _links: LinkItem;
-  accessed: AccessedItem;
-  page: PageMetadata = {} as any;
-
-
-  constructor() {
-  }
-}

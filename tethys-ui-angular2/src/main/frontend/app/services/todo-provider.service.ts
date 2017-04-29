@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {TodoResource, TodoResourceImpl} from "../models/todoResource";
+import {TodoResource} from "../models/todoResource";
 import {Http} from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 import {PageMetadata} from "../models/pageMetadata";
@@ -9,6 +9,7 @@ import {LinkItem, LinkItemImpl} from "../models/linkItem";
 import {PageMetadataImpl} from "../models/impl/pageMetadataImpl";
 import {TodoItem} from "../models/todoItem";
 import {TodoItemImpl} from "../models/impl/todoItemImpl";
+import {TodoResourceImpl} from "../models/impl/todoResourceImpl";
 
 /**
  * TodoProviderService - Fetches and modifies TodoResources from the backend API.

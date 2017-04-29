@@ -1,15 +1,8 @@
 import {TodoProviderService} from "./todo-provider.service";
 import {ConnectionBackend, Http, RequestOptions, RequestOptionsArgs} from "@angular/http";
-import {Connection} from "@angular/http/src";
+import {Connection, Response} from "@angular/http/src";
 import {Observable} from "rxjs/Observable";
-import { Response } from '@angular/http/src';
 import {ResponseOptions} from "@angular/http/src/base_response_options";
-import {TodoResource, TodoResourceImpl} from "../models/todoResource";
-import {TodoItem} from "../models/todoItem";
-import {LinkItem} from "../models/linkItem";
-import {AccessedItem} from "../models/accessedItem";
-import {PageMetadata} from "../models/pageMetadata";
-import {TodoItemImpl} from "../models/impl/todoItemImpl";
 /**
  * Created by bnjm on 3/28/17.
  */

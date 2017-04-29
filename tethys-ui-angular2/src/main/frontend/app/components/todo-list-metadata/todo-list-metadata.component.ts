@@ -1,5 +1,5 @@
 import {Component, OnInit, Input} from "@angular/core";
-import {TodoResourceImpl, TodoResource} from "../../models/todoResource";
+import {TodoResource} from "../../models/todoResource";
 import {PageMetadata} from "../../models/pageMetadata";
 
 @Component({
