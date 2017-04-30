@@ -4,7 +4,7 @@ import {TodoItem} from "../../models/todoItem";
 
 
 @Component({
-  selector: 'app-todo',
+  selector: 'app-todo-list',
   templateUrl: 'todo-list.component.html',
   styleUrls: ['todo-list.component.css'],
 })

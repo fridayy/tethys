@@ -7,7 +7,7 @@ import React from 'react';
 import './Todoitem.css'
 import Button from '../button/Button';
 import {OverlayTrigger, Tooltip, Panel} from 'react-bootstrap';
-import FontAwesome from 'react-fontawesome';
+import {FontAwesome} from 'react-fontawesome'
 
 const TodoItem = (props) => {
     let bsStatus = "danger";
